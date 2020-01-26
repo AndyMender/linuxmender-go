@@ -21,3 +21,7 @@
 # Go's binaries and downloaded packages
 bin/
 pkg/
+src/
+
+# Re-enable main project source dir
+!src/linuxmender/
