@@ -1,7 +1,7 @@
 A small Web development project for my personal website/blog
 
 This project is being built using:
-- front-end: HTML/CSS with probably [Materialize](https://materializecss.com)) and Go with... (framework of choice)
+- front-end: HTML/CSS with probably [Materialize](https://materializecss.com)) and [beego](https://github.com/astaxie/beego://github.com/astaxie/beego)
 - back-end: Go with [go-sqlite3](https://github.com/mattn/go-sqlite3)
 - Web serving: [Nginx](https://www.nginx.com/) and [Docker](https://www.docker.com/)
 
