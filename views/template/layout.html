@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!--Meta blocks-->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="refresh" content="300"/>
+  <head>
+    <!--Meta blocks-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300" />
 
-        <!--Import Google Icon Font-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!--Import Google Icon Font-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-        <!--Compiled and minified CSS-->
-        <link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css">
+    <!--Compiled and minified CSS-->
+    <link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css">
 
-        <!--TODO: template title block in Go code!-->
-        <title>{{.Title}}</title>
-    </head>
-    <body>
-            <nav class="nav-extended">
-              <div class="nav-wrapper">
+    <!--TODO: template title block in Go code!-->
+    <title>{{.Title}}</title>
+  </head>
 
-                <a href="/" class="brand-logo"><i class="material-icons">developer_board</i>{{.Title}}</a>
-                <!--Info icons and links-->
-                <ul class="right hide-on-med-and-down">
-                  <li><a href="https://github.com/AndyMender"><i class="material-icons left">public</i>GitHub</a></li>
-                  <li><a href="https://at.linkedin.com/in/andrzej-bylicki"><i class="material-icons left">people_alt</i>LinkedIn</a></li>
-                  <li><a href="mailto:andymenderunix@gmail.com"><i class="material-icons left">mail</i>Email Me!</a></li>
-                </ul>
-              </div>
-              <div class="nav-content">
-                <!--TODO: fix alignment within navbar-->
-                <span class="title">A geek apprentice in quest of computing comprehension...</span>
-              </div>
-            </nav>
+  <body>
+    <nav class="nav-extended">
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo"><i class="material-icons">developer_board</i>{{.Title}}</a>
 
-            <div class="row">
-              <!--Current blog entry text area-->
-              <div class="col s12 m8">
-                <h2 class="header">{{.EntryTitle}}</h2>
-                  {{.LayoutContent}}
-              </div>
+        <!--Info icons and links-->
+        <ul class="right hide-on-med-and-down">
+          <li><a href="https://github.com/AndyMender"><i class="material-icons left">public</i>GitHub</a></li>
+          <li><a href="https://at.linkedin.com/in/andrzej-bylicki"><i class="material-icons left">people_alt</i>LinkedIn</a></li>
+          <li><a href="mailto:andymenderunix@gmail.com"><i class="material-icons left">mail</i>Email Me!</a></li>
+        </ul>
+      </div>
+      <div class="nav-content">
+        <!--TODO: fix alignment within navbar-->
+        <span class="title">A geek apprentice in quest of computing comprehension...</span>
+      </div>
+    </nav>
 
-              <!--Blog entry links area-->
-              <div class="col right">
-                <h4 class="header">Other Entries</h4>
-                <div class="collection">
-                  {{range $title, $route := .BlogEntries}}
-                    <a href={{$route}} class="collection-item">{{$title}}</a>
-                  {{end}}
-                </div>
-              </div>
-              <!--TODO: Comments area?-->
-            </div>
+    <div class="row">
+      <!--Current blog entry text area-->
+      <div class="col s12 m8">
+        <h2 class="header">{{.EntryTitle}}</h2>
+        {{.LayoutContent}}
+      </div>
 
-        <!--Compiled and minified JavaScript-->
-        <script type="text/javascript" src="/static/js/materialize.min.js"></script>
-    </body>
-    <footer>
-    </footer>
+      <!--Blog entry links area-->
+      <div class="col right">
+        <h4 class="header">Other Entries</h4>
+        <div class="collection">
+          {{range $title, $route := .BlogEntries}}
+            <a href={{$route}} class="collection-item">{{$title}}</a>
+          {{end}}
+        </div>
+      </div>
+
+      <!--TODO: Comments area?-->
+    </div>
+
+    <!--Compiled and minified JavaScript-->
+    <script type="text/javascript" src="/static/js/materialize.min.js"></script>
+  </body>
+  <footer>
+  </footer>
 </html>
