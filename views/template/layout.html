@@ -20,6 +20,7 @@
               <div class="nav-wrapper">
 
                 <a href="/" class="brand-logo"><i class="material-icons">developer_board</i>{{.Title}}</a>
+                <!--Info icons and links-->
                 <ul class="right hide-on-med-and-down">
                   <li><a href="https://github.com/AndyMender"><i class="material-icons left">public</i>GitHub</a></li>
                   <li><a href="https://at.linkedin.com/in/andrzej-bylicki"><i class="material-icons left">people_alt</i>LinkedIn</a></li>
@@ -33,27 +34,27 @@
             </nav>
 
             <div class="row">
+              <!--Current blog entry text area-->
               <div class="col s12 m8">
                 <h2 class="header">{{.EntryTitle}}</h2>
                   {{.LayoutContent}}
               </div>
-              <div class="col right">
 
+              <!--Blog entry links area-->
+              <div class="col right">
                 <h4 class="header">Other Entries</h4>
                 <div class="collection">
                   {{range $title, $route := .BlogEntries}}
                     <a href={{$route}} class="collection-item">{{$title}}</a>
                   {{end}}
                 </div>
-
               </div>
+              <!--TODO: Comments area?-->
             </div>
 
         <!--Compiled and minified JavaScript-->
         <script type="text/javascript" src="/static/js/materialize.min.js"></script>
     </body>
     <footer>
-
     </footer>
-
 </html>
