@@ -13,15 +13,10 @@ type RouteController struct {
 	EntryRecords map[string]models.Entry
 }
 
-// Definitions for common paths
-const (
-	layout = "template/layout.html"
-)
-
 // Prepare performs an initial setup before running any other method
 func (ctrl *RouteController) Prepare() {
 	// Attach base page layout
-	ctrl.Layout = layout
+	ctrl.Layout = "template/layout.html"
 }
 
 // GetIndex generates route details for the default index page
@@ -61,9 +56,7 @@ func (ctrl *RouteController) GetEntry() {
 		ctrl.Data["DatePosted"] = entry.DatePosted
 		ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 	} else {
-		// Default: HTTP 404 response page
 		ctrl.Abort("404")
-		// ctrl.GetNotFound()
 	}
 }
 
