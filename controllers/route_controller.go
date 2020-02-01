@@ -64,12 +64,13 @@ func (ctrl *RouteController) GetEntry() {
 		ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 	} else {
 		// Default: HTTP 404 response page
-		ctrl.GetNotFound()
+		ctrl.Abort("404")
+		// ctrl.GetNotFound()
 	}
 }
 
-// GetNotFound generates route details for the 404 response page
-func (ctrl *RouteController) GetNotFound() {
+// Error404 generates route details for the 404 response page
+func (ctrl *RouteController) Error404() {
 	// Attach base page layout
 	// TODO: move call elsewhere to limit redundancy?
 	ctrl.Layout = layout
