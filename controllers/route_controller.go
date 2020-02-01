@@ -18,13 +18,15 @@ const (
 	layout = "template/layout.html"
 )
 
+// Prepare performs an initial setup before running any other method
+func (ctrl *RouteController) Prepare() {
+	// Attach base page layout
+	ctrl.Layout = layout
+}
+
 // GetIndex generates route details for the default index page
 // TODO: separate "index" route from regular entry routes
 func (ctrl *RouteController) GetIndex() {
-	// Attach base page layout
-	// TODO: move call elsewhere to limit redundancy?
-	ctrl.Layout = layout
-
 	// Extract index entry
 	entry, _ := ctrl.EntryRecords["index"]
 
@@ -40,10 +42,6 @@ func (ctrl *RouteController) GetIndex() {
 
 // GetEntry generates route details for blog entry pages
 func (ctrl *RouteController) GetEntry() {
-	// Attach base page layout
-	// TODO: move call elsewhere to limit redundancy?
-	ctrl.Layout = layout
-
 	// Additional dynamic layout sections?
 	// ctrl.LayoutSections = make(map[string]string)
 
@@ -71,10 +69,6 @@ func (ctrl *RouteController) GetEntry() {
 
 // Error404 generates route details for the 404 response page
 func (ctrl *RouteController) Error404() {
-	// Attach base page layout
-	// TODO: move call elsewhere to limit redundancy?
-	ctrl.Layout = layout
-
 	// Load main HTML text block into LayoutContent field
 	ctrl.TplName = "pages/notfound.html"
 
