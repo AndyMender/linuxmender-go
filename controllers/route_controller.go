@@ -22,16 +22,13 @@ func (ctrl *RouteController) Prepare() {
 // GetIndex generates route details for the default index page
 // TODO: separate "index" route from regular entry routes
 func (ctrl *RouteController) GetIndex() {
-	// Extract index entry
-	entry, _ := ctrl.EntryRecords["index"]
-
 	// Load main HTML text block into LayoutContent field
 	ctrl.TplName = "pages/index.html"
 
 	// Populate remaining fields
 	ctrl.Data["Title"] = "Lands of Unix"
-	ctrl.Data["EntryTitle"] = entry.Title
-	ctrl.Data["DatePosted"] = entry.DatePosted
+	ctrl.Data["EntryTitle"] = "Welcome!"
+	ctrl.Data["DatePosted"] = "February 1st, 2020"
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 }
 

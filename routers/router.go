@@ -18,7 +18,5 @@ func init() {
 
 	// Attach controller callback object to URL paths
 	beego.Router("/", ctrl, "get:GetIndex")
-	// TODO: separate "index" route from regular entry routes
-	beego.Router("/index", ctrl, "get:GetIndex")
 	beego.Router("/:entry", ctrl, "get:GetEntry")
 }
