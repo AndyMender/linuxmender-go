@@ -16,7 +16,7 @@ func init() {
 	// Register controller for error handling
 	beego.ErrorController(ctrl)
 
-	// Attach controller callback objects to URL paths
+	// Attach controller callback object to URL paths
 	beego.Router("/", ctrl, "get:GetIndex")
 	// TODO: separate "index" route from regular entry routes
 	beego.Router("/index", ctrl, "get:GetIndex")
