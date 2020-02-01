@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!--Compiled and minified CSS-->
-    <link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css">
 
     <!--TODO: template title block in Go code!-->
     <title>{{.Title}}</title>
@@ -37,27 +37,31 @@
     </div>
 
     <div class="row">
+
       <!--Current blog entry text area-->
-      <div class="col s7">
-        <h2 class="header">{{.EntryTitle}}</h2>
+      <div class="col s8">
+        <h2>{{.EntryTitle}}</h2>
+        <p>{{.DatePosted}}</p>
+        
+        <!--Content from blog entries-->
         {{.LayoutContent}}
       </div>
 
       <!--Blog entry links area-->
-      <div class="col right">
+      <div class="col">
         <h3 class="header">Other Entries</h3>
-        <div class="collection">
-          {{range $title, $route := .BlogEntries}}
-            <a href={{$route}} class="collection-item">{{$title}}</a>
+        <ul class="collection">
+          {{range $entryID, $entry := .BlogEntries}}
+            <a href="/{{$entryID}}" class="collection-item">{{$entry.Title}}</a>
           {{end}}
-        </div>
+        </ul>
       </div>
 
       <!--TODO: Comments area?-->
     </div>
 
     <!--Compiled and minified JavaScript-->
-    <script type="text/javascript" src="/static/js/materialize.min.js"></script>
+    <script type="text/javascript" src="static/js/materialize.min.js"></script>
   </body>
   <footer>
   </footer>
