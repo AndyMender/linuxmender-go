@@ -1,9 +1,14 @@
 {
-  "index": {
-    "Title": "Welcome!",
+  "000": {
+    "Title": "When It All Began",
     "DatePosted": "February 1st, 2020",
-    "Template": "index",
+    "Template": "000",
+    "Tags": []
+  },
+  "001": {
+    "Title": "The Serene Trees of Bodhi – Part 1",
+    "DatePosted": "October 23rd, 2014",
+    "Template": "001",
     "Tags": []
   }
-
 }  
