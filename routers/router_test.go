@@ -1,4 +1,4 @@
-package tests
+package routers
 
 import (
 	_ "linuxmender/routers"
