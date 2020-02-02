@@ -3,7 +3,6 @@ package models
 import (
 	"encoding/json"
 	"io/ioutil"
-	"linuxmender/paths"
 	"log"
 )
 
@@ -14,12 +13,12 @@ type Entry struct {
 }
 
 // GetEntries reads the entries JSON file and returns a slice of Entry records
-func GetEntries() map[string]Entry {
+func GetEntries(entriesPath string) map[string]Entry {
 	var entryRecords map[string]Entry
 
-	entriesText, err := ioutil.ReadFile(paths.EntriesPath)
+	entriesText, err := ioutil.ReadFile(entriesPath)
 	if err != nil {
-		log.Printf("%v is invalid. Cannot load entry definitions.\n", paths.EntriesPath)
+		log.Printf("%v is invalid. Cannot load entry definitions.\n", entriesPath)
 		return nil
 	}
 

@@ -3,6 +3,7 @@ package routers
 import (
 	"linuxmender/controllers"
 	"linuxmender/models"
+	"linuxmender/paths"
 
 	"github.com/astaxie/beego"
 )
@@ -10,7 +11,7 @@ import (
 func init() {
 	// Create central route controller object
 	ctrl := &controllers.RouteController{
-		EntryRecords: models.GetEntries(),
+		EntryRecords: models.GetEntries(paths.EntriesPath),
 	}
 
 	// Register controller for error handling
