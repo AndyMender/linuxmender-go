@@ -4,7 +4,7 @@
 FROM golang:1.13
 
 # make sure WORKDIR is inside Go's source dir
-WORKDIR /go/src/app
+WORKDIR /go/src/linuxmender
 
 COPY . .
 
