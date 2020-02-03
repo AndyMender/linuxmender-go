@@ -1,0 +1,79 @@
+<figure>
+  <img class="responsive-img" src="static/img/linus-nvidia-fu.png">
+  <figcaption><em>Better watch it, nVidia! Linus has a finger aimed at you and he's not afraid to use it ;)</em></figcaption>
+</figure>
+
+<p class="flow-text">
+  As I was venturing through Bodhi Linux, already quite familiar with my surroundings, I decided to take a step into the more 
+  obscure regions of Linux. One of the reasons why I wasn’t as hesitant to switch from Windows to Linux was the tempting offer 
+  of running favorite Windows games on Linux. Not directly, mind you, but rather through a very robust app called WINE (Wine Is 
+  Not an Emulator!). When I installed Wine (or WINE), however, I quickly noticed that not everything was right. Some OpenGL 
+  libraries were missing and I could not locate them online properly. Apparently, my situation was common and Wine required me 
+  to install nVidia drivers for my GeForce GT 520MX, which in turn would provide the necessary OpenGL libraries. While this 
+  procedure is somewhat painless on Windows, it can be at times problematic on Linux. The <em>root of all evil</em> is NVidia 
+  itself, which decided not to support Linux properly. Thereby, the options for installing nVidia drivers for Linux are as 
+  follows:
+</p>
+
+<div class="collection">
+  <li class="collection-item">
+    <span class="title">Additional Drivers</span>
+    <p>
+      Use the well-established app called Additional Drivers (via jockey-gtk) and let the system handle the whole installation 
+      process. The only manual aspect is running <code>nvidia-xconfig</code> once the installation has completed (though this is 
+      not always mentioned). Supposedly works under Ubuntu 14.04 LTS and its derivatives (Mint, Lubuntu, Peppermint, etc.). 
+      Supposedly was present earlier and then briefly discontinued, but as I joined the Linux family just this year I am unsure.
+    </p>
+  </li>
+  <li class="collection-item">
+    <span class="title">Manual Install</span>
+    <p>
+      Download the proprietary drivers from nVidia's website and install them manually. This requires linux headers for a 
+      specific kernel (often pre-installed with the kernel itself, but not always; available from official distribution 
+      repositories), basic Linux knowledge (using the terminal with the X desktop disabled) and running 
+      <code>nvidia-xconfig</code>, followed by a system reboot.
+    </p>
+  </li>
+  <li class="collection-item">
+    <span class="title">Package Manager Install</span>
+    <p>
+      Enable nVidia drivers through your package manager of choice. Ubuntu has Synaptic, ArchLinux/Manjaro Pacman and 
+      Gentoo/Sabayon – Portage. After all of the packages and their dependencies are installed/compiled, one again has to run 
+      <code>nvidia-xconfig</code> from the terminal and reboot.
+    </p>
+  </li>
+</div>
+
+<p class="flow-text">
+  In theory, all 3 options are more or less equivalent to each other, though the recommended solution for Linux users is to rely 
+  on <code>jockey-gtk</code> or package managers for most installations. When I was fervently fighting with my computer to get 
+  the drivers to work properly, I had that strong feeling that I’m doing something inherently wrong all the time. Turns out, I 
+  was partially correct. After a bit of reading about nVidia drivers for Linux I reasoned that the installation procedure is very 
+  simple... assuming the PC is equipped with a single graphics card, the said nVidia.
+</p> 
+
+<p class="flow-text">
+  Laptops usually come in two flavors – with 
+  an integrated graphics card and with an integrated graphics card + a discrete graphics card (ATI/nVidia), meaning hybrid 
+  graphics. Laptops without a discrete card are safe from driver issues, but also not well suited for heavy 3D rendering and 
+  gaming (although the new Intel HD 4000 is quite decent). I do both and probably that’s why I have to suffer 
+  (<em>sigh...</em>). Surprisingly, the discrete card is not directly connected to the screen and merely serves as a more 
+  powerful subunit of the integrated card (I'm not entirely familiar with the technical details, apologies). Because of that, it 
+  cannot function on its own. A means of switching between the two graphics cards was devised by NVidia in the form of Optimus 
+  Technology.
+</p>
+
+<p class="flow-text">
+  Windows users have it easy. The NVidia Settings platform allows switching between the integrated and discrete card or even 
+  setting up profiles for specific graphics-demanding software to improve battery life. Linux users have it hard, to the point 
+  that even Linus Torvalds had to express his concern using highly expressive gestures... Optimus for Linux has been introduced 
+  only last year as nVidia PRIME with the nVidia 319+ driver line. However, not by NVidia! The company decided to completely 
+  disregard all Linux users with switchable graphics and Linus’ middle finger was not merely an act of arrogance, but rather a 
+  response to NVidia’s stand on the matter. Now, I'm no F/OSS warrior, but the fact that Linux users are second-class citizens 
+  in respect to laptop usage is sad.
+</p>
+
+<p class="flow-text">
+  Unfortunately, making Optimus work on Bodhi Linux was way beyond my capabilities and I had to abandon the tranquil forests of 
+  Bodhi, only to resume my searches...
+</p>
