@@ -8,8 +8,8 @@ import (
 
 // Entry is a definition for Blog entry objects
 type Entry struct {
-	Title, DatePosted, Template string
-	Tags                        []string
+	Title, DatePosted string
+	Tags              []string
 }
 
 // GetEntries reads the entries JSON file and returns a slice of Entry records

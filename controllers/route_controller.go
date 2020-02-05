@@ -45,7 +45,7 @@ func (ctrl *RouteController) GetEntry() {
 	// Display correct entry page
 	if ok {
 		// Load main HTML text block into LayoutContent field
-		ctrl.TplName = fmt.Sprintf("pages/%v.html", entry.Template)
+		ctrl.TplName = fmt.Sprintf("pages/%v.html", entryID)
 
 		// Populate remaining fields
 		ctrl.Data["Title"] = entry.Title
