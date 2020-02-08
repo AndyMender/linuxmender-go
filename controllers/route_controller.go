@@ -30,6 +30,7 @@ func (ctrl *RouteController) GetIndex() {
 	ctrl.Data["EntryTitle"] = "Welcome!"
 	ctrl.Data["DatePosted"] = "February 1st, 2020"
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
+	ctrl.Data["EntryID"] = "index"
 }
 
 // GetEntry generates route details for blog entry pages
@@ -68,4 +69,5 @@ func (ctrl *RouteController) Error404() {
 	ctrl.Data["EntryTitle"] = "Whoopsies!"
 	ctrl.Data["DatePosted"] = ""
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
+	ctrl.Data["EntryID"] = "notfound"
 }
