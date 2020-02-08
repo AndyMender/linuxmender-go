@@ -20,7 +20,6 @@ func (ctrl *RouteController) Prepare() {
 }
 
 // GetIndex generates route details for the default index page
-// TODO: separate "index" route from regular entry routes
 func (ctrl *RouteController) GetIndex() {
 	// Load main HTML text block into LayoutContent field
 	ctrl.TplName = "pages/index.html"
@@ -43,20 +42,20 @@ func (ctrl *RouteController) GetEntry() {
 
 	entry, ok := ctrl.EntryRecords[entryID]
 
-	// Display correct entry page
-	if ok {
-		// Load main HTML text block into LayoutContent field
-		ctrl.TplName = fmt.Sprintf("pages/%v.html", entryID)
-
-		// Populate remaining fields
-		ctrl.Data["Title"] = entry.Title
-		ctrl.Data["EntryTitle"] = entry.Title
-		ctrl.Data["DatePosted"] = entry.DatePosted
-		ctrl.Data["BlogEntries"] = ctrl.EntryRecords
-		ctrl.Data["EntryID"] = entryID
-	} else {
+	// Abort if the blog entry doesn't exist
+	if !ok {
 		ctrl.Abort("404")
 	}
+
+	// Load main HTML text block into LayoutContent field
+	ctrl.TplName = fmt.Sprintf("pages/%v.html", entryID)
+
+	// Populate remaining fields
+	ctrl.Data["Title"] = entry.Title
+	ctrl.Data["EntryTitle"] = entry.Title
+	ctrl.Data["DatePosted"] = entry.DatePosted
+	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
+	ctrl.Data["EntryID"] = entryID
 }
 
 // Error404 generates route details for the 404 response page
