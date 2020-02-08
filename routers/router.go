@@ -1,9 +1,12 @@
 package routers
 
 import (
+	"fmt"
 	"linuxmender/controllers"
 	"linuxmender/models"
 	"linuxmender/paths"
+	"log"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -20,4 +23,32 @@ func init() {
 	// Attach controller callback object to URL paths
 	beego.Router("/", ctrl, "get:GetIndex")
 	beego.Router("/:entry", ctrl, "get:GetEntry")
+}
+
+// NextEntry tries to get the consecutive entry ID
+func NextEntry(entryID string) string {
+	entryNumber, err := strconv.Atoi(entryID)
+	if err != nil {
+		log.Printf("Entry ID: %v could not be converted to a number.\n", entryID)
+		return entryID
+	}
+
+	return fmt.Sprintf("%03d", entryNumber+1)
+}
+
+// PreviousEntry tries to get the previous entry ID
+func PreviousEntry(entryID string) string {
+	entryNumber, err := strconv.Atoi(entryID)
+	if err != nil {
+		log.Printf("Entry ID: %v could not be converted to a number.\n", entryID)
+		return entryID
+	}
+
+	entryNumber--
+	// Can't move beyond first entry
+	if entryNumber < 0 {
+		return entryID
+	}
+
+	return fmt.Sprintf("%03d", entryNumber)
 }
