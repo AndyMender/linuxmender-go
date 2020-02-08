@@ -52,6 +52,7 @@ func (ctrl *RouteController) GetEntry() {
 		ctrl.Data["EntryTitle"] = entry.Title
 		ctrl.Data["DatePosted"] = entry.DatePosted
 		ctrl.Data["BlogEntries"] = ctrl.EntryRecords
+		ctrl.Data["EntryID"] = entryID
 	} else {
 		ctrl.Abort("404")
 	}
