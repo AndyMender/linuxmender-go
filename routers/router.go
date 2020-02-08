@@ -38,6 +38,12 @@ func NextEntry(entryID string) string {
 
 // PreviousEntry tries to get the previous entry ID
 func PreviousEntry(entryID string) string {
+	// Special handling for "index" entry
+	if entryID == "" {
+		return entryID
+	}
+
+	// Convert entryID to an integer
 	entryNumber, err := strconv.Atoi(entryID)
 	if err != nil {
 		log.Printf("Entry ID: %v could not be converted to a number.\n", entryID)
@@ -55,8 +61,8 @@ func PreviousEntry(entryID string) string {
 
 // IsValidEntry checks whether the input entry ID is valid
 func IsValidEntry(entryID string) bool {
-	// "index" is not a number, but is valid
-	if entryID == "index" {
+	// "index" entry is not a number, but is valid
+	if entryID == "" {
 		return true
 	}
 

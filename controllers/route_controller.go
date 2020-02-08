@@ -30,7 +30,7 @@ func (ctrl *RouteController) GetIndex() {
 	ctrl.Data["EntryTitle"] = "Welcome!"
 	ctrl.Data["DatePosted"] = "February 1st, 2020"
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
-	ctrl.Data["EntryID"] = "index"
+	ctrl.Data["EntryID"] = ""
 }
 
 // GetEntry generates route details for blog entry pages
