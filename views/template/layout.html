@@ -55,6 +55,16 @@
 
         <!--Content from blog entries-->
         {{.LayoutContent}}
+
+        <!--Next and Back buttons-->
+        {{if .EntryID | isValidEntry}}
+        <a href="/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Back
+          <i class="material-icons right">fast_rewind</i>
+        </a>
+        <a href="/{{.EntryID | nextEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Next
+          <i class="material-icons right">fast_forward</i>
+        </a>
+        {{end}}
       </div>
 
       <!--Blog entry links area-->
