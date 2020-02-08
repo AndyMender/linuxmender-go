@@ -7,5 +7,6 @@ import (
 )
 
 func main() {
+	// Run Web server
 	beego.Run()
 }
