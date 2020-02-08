@@ -52,3 +52,18 @@ func PreviousEntry(entryID string) string {
 
 	return fmt.Sprintf("%03d", entryNumber)
 }
+
+// IsValidEntry checks whether the input entry ID is valid
+func IsValidEntry(entryID string) bool {
+	// "index" is not a number, but is valid
+	if entryID == "index" {
+		return true
+	}
+
+	// Only nmerical entries are truly valid
+	if _, err := strconv.Atoi(entryID); err == nil {
+		return true
+	}
+
+	return false
+}
