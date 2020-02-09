@@ -51,6 +51,15 @@
         </h2>
         <!--TODO: make "like" button responsive-->
         <a class="waves-effect waves-light btn"><i class="material-icons left">add</i>like</a>
+        <!--Next and Back buttons-->
+        {{if .EntryID | isValidEntry}}
+        <a href="/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Back
+          <i class="material-icons right">fast_rewind</i>
+        </a>
+        <a href="/{{.EntryID | nextEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Next
+          <i class="material-icons right">fast_forward</i>
+        </a>
+        {{end}}
         <p><em>{{.DatePosted}}</em></p>
 
         <!--Content from blog entries-->
@@ -70,11 +79,11 @@
       <!--Blog entry links area-->
       <div class="col">
         <h3 class="header">Other Entries</h3>
-        <ul class="collection">
+        <div class="collection">
           {{range $entryID, $entry := .BlogEntries}}
-            <a href="/{{$entryID}}" class="collection-item">{{$entry.Title}}</a>
+          <a class="collection-item" href="/{{$entryID}}">{{$entry.Title}}</a>
           {{end}}
-        </ul>
+        </div>
       </div>
 
       <!--TODO: Comments area?-->
