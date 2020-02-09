@@ -1,0 +1,57 @@
+<p class="flow-text">
+  The event which inspired me to write this entry was my recent laptop purchase and the subsequent struggles. I decided to buy 
+  a new computer, as the previous one had a dedicated nVidia graphics card. In general, that's great, because that extra GPU
+  power can be used for audio and video decoding via <code>vdpau</code>. However, in my case the discrete graphics chip would 
+  quickly overheat, leading to CPU throttling and a dramatic drop in overall performance. Some laptop manufacturers are notorious 
+  for that (I'm looking at you, Apple!). This time it was Samsung's fault for pairing a powerful graphics chip with a subpar 
+  cooling solution.
+</p>
+
+<p class="flow-text">
+  To the point, though. Having learnt from experience, I took great caution in choosing my future computer. Discrete graphics 
+  chips were a no-go, obviously. Also, the laptop had to be as generic as possible to guarantee some degree of Linux 
+  compatibility. This turned out to be a very tedious task as most electronics retailers fail to provide all the necessary 
+  information. There is a very noticeable difference between Intel HD Graphics 4400 and Intel HD Graphics 3000. You cannot bunch 
+  them together as <em>Integrated Intel Graphics</em>! The misinformation <em>crimes</em> committed by laptop manufacturers are 
+  even more profound. In the case of some models, it was impossible to get the complete specs even from the manual. More so, 
+  these manuals were effectively <em>How to Install Windows on Laptop X</em> guides. I don't understand why some manufacturers 
+  like HP, Dell, IBM and Lenovo are willing to disclose technical details of their products, while others like ASUS fail to do so. 
+  For Pete's sake! It gets even worse when retailer A says X and retailer B says Y. Who should I trust? I, and many other people, 
+  do honestly care whether the wireless adapter in my laptop is a reputable product from Intel or Realtek rather than a cheap 
+  no-name knock-off.
+</p>
+
+<p class="flow-text">
+  Sadly, the wireless adapter was the matter of debate in my case. The Asus VivoBook I purchased shipped with a Mediatek 7630e 
+  wireless card. This specific wireless card is a known troublemaker across all platforms. It truly baffles me why ASUS decided 
+  to put one of these in a perfectly decent laptop.
+</p>
+
+<p class="flow-text">
+  This prompted me to do a thorough search of USB wireless dongles, for which the specific chipset is known and documented. As of 
+  now I am a proud owner of a TP-LINK 725N (containing the Realtek 8188eu wireless chip). It works flawlessly even on minimalist 
+  Linux distributions, such as Arch Linux.
+</p>
+
+<p class="flow-text">
+  This leads me to the very point of these musings - Linux hardware compatibility. People usually praise Windows for its hardware 
+  compatibility from a largely biased perspective of a pre-installed operating system. Sure, if you buy a laptop with Windows on 
+  it, chances are that a team of engineers devoted hours of honest work to make it fully functional out-of-the-box. And believe 
+  me, some models required truly crazy BIOS hacks to make even Windows run smoothly on them. Now, things aren’t as comfortable 
+  when you have to do a fresh installation. Most of the drivers are missing and sometimes even establishing an Internet 
+  connection is impossible. This is completely unthinkable in Linux. Every larger distribution makes it a point of personal pride 
+  that the system is instantly usable. Obviously, at least a wired connection (via a DHCP daemon) is available to install updates 
+  or missing libraries. In addition, the Linux kernel comes with a set of loadable modules to support the majority of hardware 
+  - DVD-ROM readers, wireless and wired adapters, SD card readers, etc. Granted, overall hardware compatibility is better on 
+  Windows, because companies prioritize Windows in driver development and the OS itself favors backwards compatibility to an 
+  extreme degree. However, the out-of-the-box experience of Linux is far, far superior.
+</p>
+
+<p class="flow-text">
+  To sum up, I strongly believe that Linux is not getting as much attention as it deserves. For instance, the TP-LINK 725N USB 
+  dongle advertised Win7, Wn8 and Win8.1 compatibility only. Other USB dongles mentioned Linux, but listed outdated kernels 
+  (up to version 2.8, while version 3.19 is already in development). This is a joke. Hardware vendors should start paying more 
+  attention to Linux as it is a growing force on the market. Smartphones run the Linux-derived Android. Servers everywhere run 
+  Linux, because it is <em>the</em> server operating system. Hell, even Valve decided that it is worth investing in Linux 
+  (see: SteamOS). I hope hardware manufacturers will follow suit soon enough.
+</p>
