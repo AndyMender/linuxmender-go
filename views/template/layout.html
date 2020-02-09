@@ -67,14 +67,18 @@
         <!--Content from blog entries-->
         {{.LayoutContent}}
 
+        <!--Back and Next buttons-->
         {{if .EntryID | isValidEntry}}
-        <!--Next and Back buttons-->
-        <a href="/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Back
-          <i class="material-icons right">fast_rewind</i>
-        </a>
-        <a href="/{{.EntryID | nextEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Next
-          <i class="material-icons right">fast_forward</i>
-        </a>
+        <div class="center-align">
+          <a href="/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">
+            Back
+            <i class="material-icons right">fast_rewind</i>
+          </a>
+          <a href="/{{.EntryID | nextEntry}}" class="btn waves-effect waves-light" type="submit" name="action">
+            Next
+            <i class="material-icons right">fast_forward</i>
+          </a>
+        </div>
         {{end}}
       </div>
 
