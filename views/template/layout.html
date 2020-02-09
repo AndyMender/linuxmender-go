@@ -47,14 +47,8 @@
       <div class="col s8">
         <h2>
           {{.EntryTitle}}
-          {{if .EntryID | isValidEntry}}
-          <span class="new badge z-depth-1" data-badge-caption="likes">0</span>
-          {{end}}
         </h2>
         {{if .EntryID | isValidEntry}}
-        <!--TODO: make "like" button responsive-->
-        <a class="waves-effect waves-light btn"><i class="material-icons left">add</i>like</a>
-
         <!--Next and Back buttons-->
         <a href="/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Back
           <i class="material-icons right">fast_rewind</i>
@@ -62,16 +56,18 @@
         <a href="/{{.EntryID | nextEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Next
           <i class="material-icons right">fast_forward</i>
         </a>
+
+        <!--TODO: make "like" button responsive-->
+        <a class="waves-effect waves-light btn">0 likes</a>
+        <a class="waves-effect waves-light btn"><i class="material-icons">thumb_up_alt</i></a>
         {{end}}
+
         <p><em>{{.DatePosted}}</em></p>
 
         <!--Content from blog entries-->
         {{.LayoutContent}}
 
         {{if .EntryID | isValidEntry}}
-        <!--TODO: make "like" button responsive-->
-        <a class="waves-effect waves-light btn"><i class="material-icons left">add</i>like</a>
-
         <!--Next and Back buttons-->
         <a href="/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Back
           <i class="material-icons right">fast_rewind</i>
