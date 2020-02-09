@@ -1,0 +1,65 @@
+<p class="flow-text">
+  Windows, Mac OS X, the BSDs and Linux are all contestants in an intriguing race – a race of technological progress. To be 
+  more precise, they occupy slightly different niches in the computing ecosystem, however compete against each other in terms of 
+  overall usability (the BSDs to a much lesser extent). 
+  Sadly, as both Windows and Mac OS X are the most popular end-user operating systems, the majority of hardware support and 
+  development is dedicated to them. Of course, there is also the Linux-based Android on mobile devices! However, Linux itself is 
+  not so far behind. More and more end-user features are being introduced to the kernel. For instance, Linux kernel version 3.16 
+  adds OS-level response to physical shock, relying on built-in pressure sensors (supported in Windows since XP). The current 
+  stable edition of the Linux kernel is already 3.18, while 3.19 is in the testing phase (release candidate 5, 3.19-rc5, can be 
+  downloaded from <a target="--blank" href="https://www.kernel.org/">kernel.org</a>).
+</p>
+
+<p class="flow-text">
+  Because Linux is an ever-changing software landscape, I decided to settle down with an operating system that would follow the 
+  so-called rolling-release development model and could be constantly kept up-to-date. Of the most popular distributions I 
+  considered Gentoo, Arch Linux and Debian Sid.
+</p>
+
+<p class="flow-text">
+  I tried Gentoo a few months ago and was moderately annoyed with its time-consuming installation. I quickly deemed it too 
+  difficult for me, though I might try it again once I gain sufficient experience. From thereon I limited my choices to Arch and 
+  Sid.
+</p>
+
+<p class="flow-text">
+  Arch Linux is a typical rolling-release distribution, following principles of simplicity and clarity. The installation 
+  procedure is almost purely manual (less troublesome than Gentoo, though) and requires adjustments to several configuration 
+  files. However, it also provides a very good learning opportunity. The key to success is a combination of up-to-date vanilla 
+  binary packages (very similar to the ones available from upstream open-source projects) and easy access to compiling tools.
+</p>
+
+<p class="flow-text">
+  Debian is definitely not a rolling-release distribution, though the Unstable / Sid branch is often considered such. Debian 
+  developers regard it as a polygon for new software packages. It will never see an actual versioned release, though, so it is 
+  highly debatable whether Sid is a true rolling-release distribution. I greatly appreciate Debian for its versatility and 
+  stability, but because even Debian developers themselves deem Sid to be highly unstable (frequent updates may cause dependency 
+  errors, etc.) and it does not receive security updates like Testing and Stable in a timely fashion, I decided to leave it for 
+  now.
+</p>
+
+<p class="flow-text">
+  Arch Linux is very much a <em>vanilla</em> distribution in the sense that it closely follows the defaults set by upstream 
+  projects (third-party software, the kernel, the X Server, etc.). As a result, it's one of the first Linux distributions to 
+  receive updates. In a way it puts trust in upstream developer groups. If the kernel team decides that version 3.18 is stable 
+  enough to be released, it's deemed stable enough for use in Arch Linux. I guess this attitude gave Arch Linux the reputation of 
+  being on the <em>bleeding edge</em> of software development. However, it doesn't necessarily mean that it's more bug-ridden.
+</p>
+
+<p class="flow-text">
+  Debian development standards are much higher, of course. Every upstream package is first accepted into Experimental and 
+  Unstable where it is thoroughly processed by multiple dev teams. This guarantees additional testing and the fact that the 
+  package will be configured to suit the needs of the average user. However, it may take some time before it lands in Debian 
+  Testing and unless it's a security update, it won't appear in Debian Stable until the next release. In addition, the Debian 
+  dev teams introduce a number of changes to the configuration of the package to make it fit the rest of the OS. On one hand, it 
+  makes the entire operating system more cohesive. The downside is that it introduces bugs. Also, not every upstream developer or 
+  dev team is comfortable with releasing only security fixes outside of their regular development cycle or adhering to the 
+  development model of downstream Linux distributions (see: 
+  <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=819703#158">the XScreenSaver rant in the Debian bug report logs</a>).
+</p>
+
+<p class="flow-text">
+  I greatly appreciate the enormous amount of work the Debian dev teams put into the distribution, however the more it diverges 
+  from the original state and intent of upstream projects, the more difficult it becomes to troubleshoot third-party software. 
+  Thereby, for the time being I decided to roll with Arch Linux. Which distribution would you pick?
+</p>
