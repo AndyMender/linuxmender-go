@@ -14,7 +14,7 @@ type Entry struct {
 
 // GetEntries reads the entries JSON file and returns a slice of Entry records
 func GetEntries(entriesPath string) map[string]Entry {
-	var entryRecords map[string]Entry
+	entryRecords := make(map[string]Entry)
 
 	entriesText, err := ioutil.ReadFile(entriesPath)
 	if err != nil {
