@@ -14,7 +14,8 @@ The project follows the [MVC design pattern](https://en.wikipedia.org/wiki/Model
 
 Preview
 ---
-If you're curious how the Web page looks at the moment, it can be built and run using Docker (Dockerfile provided). Make sure to expose and map port `8080` properly :).
+If you're curious how the Web page looks at the moment, it can be built and run using Docker (Dockerfile provided). Make sure to expose and map port `8080` properly :). Hopefully you'll see something like this:
+![preview](static/img/blog_preview.png)
 
 Requirements
 ---
