@@ -1,0 +1,64 @@
+<figure>
+  <img class="responsive-img" src="static/img/wine.jpg">
+</figure>
+
+<p class="flow-text">
+  One of the major concerns that beginner Linux users have is whether they will still be able to run their favorite Windows 
+  programs, especially games, despite not running Windows itself. In fact, there are numerous distributions that address this 
+  issue as part of their missive. For instance, Zorin OS and Linux Mint advertise themselves as perfect not only for beginners, 
+  but also for former Windows users. Those two distributions I would surely recommend to <em>Windows refugees</em>. Apart from 
+  them, Robolinux offers a pre-configured virtual machine for Windows XP and Windows 7, so that Windows can run seamlessly 
+  alongside Linux.
+</p>
+
+<p class="flow-text">
+  However, that's not all! There is one majestic piece of software available to most Linux distributions – <b>WINE</b>. Contrary 
+  to popular belief, <b>Wine Is NOT an Emulator</b> (that's also what the acronym stands for, by the by). Windows emulators of 
+  course exist in the form of virtual machines. However, WINE works slightly differently. It is a compatibility layer which 
+  directly translates Linux system calls to their closest Windows-specific equivalents. Due to that and because of the way the 
+  code is written, the resource penalty of running Windows applications through WINE is minute. Hell, some run even smoother than 
+  natively on Windows. 
+</p>
+
+<p class="flow-text">
+  Supposedly, modern 64-bit Windows versions also use a compatibility layer for 32-bit applications. Although, I no longer own a 
+  Windows computer to verify this. Anyway, I decided to give some old gaming classics a go. As a case study I have chosen 
+  <em>Age of Empires 2: The Age of Kings</em>.
+</p>
+
+<p class="flow-text">
+  It's worth mentioning that the main website of the WINE project, <a href="https://www.winehq.org/">WineHQ</a>, hosts a vast 
+  database of reports on Windows applications. Some had already been tested and are known to work splendidly. Some, ranked 
+  <em>Garbage</em> don't and most likely never will. Such is the binary-only nature of commercial software, though. 
+  <em>Age of Empires 2 </em> was a good choice as it had been ranked <em>Gold</em> (playable, with only minor issues). Admittedly, 
+  the issues I encountered were a little more than minor:
+</p>
+
+<ul class="collection">
+  <li class="collection-item">
+    <span class="title"><b>1. CD-ROM not recognized.</b></span>
+    <p>
+      This might come as a surprise, but Linux distributions are sometimes incompletely configured and they do not automagically 
+      recognize and / or mount the game CD-ROM. There is a quick fix to that, though. In our filesystem tab file 
+      <code>/etc/fstab</code> we define the following line:<br>
+      <code>/dev/sr0                 /media/cdrom                iso9660               ro,exec,noauto                0 0</code><br>
+      This translates to <em>mount block device <code>/dev/sr0</code> (the usual CD-ROM path) of filesystem type ISO9660 locally 
+        as <code>/media/cdrom</code>, read-only (<code>ro</code>) and for execution (<code>exec</code>)</em>. The <code>noauto</code> 
+        option guarantees that the mount procedure will not be executed automatically. The reason I am actually listing all of 
+        that is because I had to do quite a bit of research to find a working solution.
+    </p>
+  </li>
+  <li class="collection-item">
+    <span class="title"><b>2. Game crashes at screen resolution 1024×768.</b></span>
+    <p>
+      This happens only when in full-screen mode. I believe the reason is a collision between WINE and the window manager. Alas, 
+      I have a small, 13” screen with a 1366×768 screen resolution. Not exactly suited for gaming.
+    </p>
+  </li>
+</ul>
+
+<p class="flow-text">
+  On a positive note, these were the only issues I encountered when trying to run <em>Age of Empires 2</em> through WINE. No 
+  graphical glitches (a common problem with WINE from what I read). Sound worked well, too. As I remember, I had had many more 
+  issues with <em>Age of Empires 2</em> back on Windows 7.
+</p>
