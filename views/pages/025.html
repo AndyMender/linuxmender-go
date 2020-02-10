@@ -1,0 +1,56 @@
+<p class="flow-text">
+  For quite a while now I have been considering source-based Linux distributions. I believe they pose the highest level of 
+  difficulty in terms of installation and maintenance. Since I strive to understand Linux fully, they were the logical next step 
+  on my path. I had already tried Gentoo and Sabayon some months ago, albeit without much success. However, with newly gained 
+  knowledge I felt much more confident and skilled. I knew that this time I would succeed!
+</p>
+
+<p class="flow-text">
+  The source-based model is not so popular anymore, because it entails time-consuming compilation of most or all software 
+  packages, followed by extensive manual configuration. Currently, there is Gentoo, Sabayon, Lunar Linux, Calculate Linux and 
+  some other less known distros. Since I read complaints regarding the installation process of Lunar Linux, I decided to give 
+  Gentoo a second (or maybe third?) go. This time around I decided to follow the official Gentoo Handbook to the letter, though 
+  with some improvements on my part. The default method is to use one of the many Gentoo’s live images and start from there. Alas, 
+  the interface offered is entirely console-based and some things are rather inconvenient (copy-pasting, Web browsing, etc.). 
+  Hence, I decided to start from an ArchBang live iamge (sorry, Archie!). The installation procedure was essentially the same 
+  (mounting hard drive partitions to local directories on the live image medium, downloading and unpacking the Gentoo environment, 
+  etc.). The only point when it differed was when I had to configure Portage mirrors manually, because ArchBang’s liveCD lacked 
+  the required software. To be fair though, there was an actual obstacle during installation – setting up GRUB2 on an EFI 
+  partition. For reasons unknown to me, this was improperly documented in the Handbook. Two vastly different procedures were 
+  suggested and the Handbook itself promoted setting up GRUB2 on the Master Boot Record (MBR) of the drive. Unfortunately, UEFI 
+  in its default mode forces the user to rely on an EFI partition for bootloader installation, though using MBR is possible.
+</p>
+
+<p class="flow-text">
+  Compiling the kernel was a particularly interesting experience. I had to (chose to?) spend roughly 3-4 hours going through all 
+  of the options to understand what Linux does and doesn’t support. Though time-consuming and mundane, I prefer building my own 
+  kernels with selective hardware support, rather than using a possibly bloated distribution kernel. This is especially 
+  convenient for laptops, which can hardly be customized. Surprisingly, it was not the most time-consuming step during Gentoo 
+  maintenance. Software installation was.
+</p>
+
+<p class="flow-text">
+  Looking at times across packages, I immediately noticed that the numbers are quite discouraging. For instance, Firefox, being 
+  one of the major offenders, takes approximately 1-2 hours to compile. On my laptop (core i3, 4GB RAM, regular HDD) it took 4 
+  hours, even though I disabled many options (USE flags) prior to compilation. The KDE desktop environment or Libre Office are 
+  even more problematic. Many Gentoo users leave such updates to run overnight.
+</p>
+
+<p class="flow-text">
+  Then it struck me. In its stable repositories, Gentoo does not offer packages as <em>bleeding-edge</em> as in Arch Linux. The 
+  software versions available were exactly the same as in Debian Sid. Perhaps the kernel, among few others, was more recent. 
+  Furthermore, as many users before me observed, the boost in speed and responsiveness was marginal. Thence, I found it amusing 
+  that each of us Gentoo users would have to pay with their time and their computers’ processing power to reach the same result 
+  as Debian developers, when building software packages for the Linux populace.
+</p>
+
+<p class="flow-text">
+  All in all, I believe it was worth it, however. Gentoo Linux is like a bootcamp for aspiring Linux developers. It teaches Linux, 
+  but teaches hard. The lessons I learned from setting it up will become useful in the future, no doubt. However, since the dawn 
+  of amd64 computers, compiling software locally for better performance is no longer advantageous. Rather, it presents an 
+  alternative to those paranoid about unnecessary features in an operating system, such as me.
+</p>
+
+<p class="flow-text">
+  Next destination – Debian!
+</p>
