@@ -1,0 +1,53 @@
+<figure>
+  <img class="responsive-img" src="https://farm5.staticflickr.com/4070/4438675964_ab82db9f33_b.jpg">
+</figure>
+
+<p class=flow-text>
+  <span class="title"><em><b>Feb 16th, 2020 edit:</b></em></span>
+  <br>While reviewing the content of this entry years later I realized that Debian has significantly improved its package 
+  management tools and most of below content is outdated. I decided to leave it to give people a historical perspective, though.
+</p>
+
+<p class="flow-text">
+  Some time ago I decided on Debian as my operating system of choice. It was powerful, flexible and definitely designed with 
+  Linux experts in mind. I managed to successfully install it from the minimal netbootCD image on multiple computers, regardless 
+  of the hardware. Also, compiling new kernels or recompiling existing ones was a breeze. Thanks to <code>dpkg</code> and 
+  <code>kpkg</code>, handling kernels became as simple as installing <code>.deb</code> packages. I greatly enjoyed Debian for the 
+  last couple of weeks. However, there was a <em>but</em> (or rather several <em>but(t)s</em>).
+</p>
+
+<p class="flow-text">
+  First off, the output of <code>apt</code> and <code>aptitude</code> is rather unhelpful. Neither of these <code>dpkg</code> 
+  front-ends provides complete information about searched for packages. <code>aptitude</code> is slightly better, because it at 
+  least gives you a short description for each package. I am aware I can run <code>apt-cache policy</code> to get more info for 
+  a particular package, but do I need to do it every single time? Also, only <code>aptitude</code> informs the user whether any 
+  of the packages matching his / her search terms have been installed already. Moreover, the syntax for installing packages is 
+  needlessly long and complicated. For instance, why are <code>apt-get</code> and <code>apt-cache</code> separate commands, when 
+  other distributions use a single interface / app for everything? To top it off, <code>apt-get</code> is far too anticipative 
+  in regards to search terms. I'm not sure how does it work exactly, but for the more common keywords I would often get a list of 
+  completely unrelated packages.
+</p>
+
+<p class="flow-text">
+  Secondly, installing packages is an extremely lengthy procedure. Every single time it involves multiple steps - downloading, 
+  unpacking, setting up, installing, updating initramfs, etc. Does the initramfs image need to be updated every single time? 
+  Really? I thought that's only required when updating the kernel.
+</p>
+
+<p class="flow-text">
+  Finally, dependency handling. Debian has this concept of <em>recommended packages</em> - things you might find useful in 
+  combination with your currently installed software, for instance <code>-doc</code> packages with documentation. Great idea! 
+  However, Debian also makes some pretty big assumptions when it comes to the dependecies of packages selected for installation. 
+  Sure, when you're setting up your system for the first time, this might be useful. But what if you want to run some software 
+  without the X11 Windowing Server? Nope, not possible! Both <code>apt</code> and <code>aptitude</code> will pull in a boatload 
+  of extra packages on the premise that maybe, just maybe, you might want to run also the GUI tool for your headless app. 
+  Dependency versioning is a nightmare in its own right. Something Debian is notorious for.
+</p>
+
+<p class="flow-text">
+  To end my rant I want to say that I love Debian as an operating system. I really do! However, the way it does package 
+  management is just clunky and terribly unfriendly to users. Oddly enough, some of the problems went away as I started using 
+  the <code>Synaptic</code> GUI tool. Regardless, there exists a distribution that very elegantly addresses all of my issues 
+  with Debian – <b>Arch Linux</b>. This time I decided to install it properly, from an Arch Linux liveCD, not Archbang or any 
+  other derivative. Fingers crossed!
+</p>
