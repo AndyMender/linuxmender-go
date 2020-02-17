@@ -1,0 +1,83 @@
+<figure>
+  <img class="responsive-img" src="http://www.zoom-cinema.fr/media/photos/6703/un-serpent.jpg">
+  <figcaption><em>Sssussspiciousssss...!</em></figcaption>
+</figure>
+
+<p class="flow-text">
+  In <a target="--blank" href="/012">one of my earlier entries</a> I wrote a bit about systemd, but I did not elaborate on it 
+  sufficiently. The time has come.
+</p>
+
+<p class="flow-text">
+  To those unfamiliar with the topic, systemd is a Linux init system, but also a device and service manager. It governs the boot 
+  sequence, drive mounting, networking, etc. In other words, it's pivotal to the proper functioning of a Linux operating system.
+  It was originally developed as a pet project by a Red Hat employee, Lennard Poettering. After initial resistance from Red Hat, 
+  it gained enough traction in the Linux community to be included in Fedora, Arch Linux and much, much later in Debian, Ubuntu 
+  and finally back in CentOS and RHEL.
+</p>
+
+<p class="flow-text">
+  In and of itself, systemd doesn't sound like a bad idea - <b>an effort to unify and standardize the Linux ecosystem</b>. 
+  Fantastic, right? The issues become slightly more noticeable when one looks under the hood. 
+</p>
+
+<p class="flow-text">
+  Firstly, systemd seems to have been designed in a vacuum, with complete disregard for the design principles behind Unix-like 
+  operating systems. I'm talking about <b>transparency</b> (parsable clear-text log files and program output), <b>modularity</b> 
+  (each component can be used independently, but when used together they display incredible synergy) and <b>ease of understanding</b> 
+  (it is apparent what each component does, without the need to study it thoroughly). Systemd is none of that. More so, it falls 
+  prey to bugs which had been addressed in other Unix system software in the past and could be considered <em>obvious exploits</em>.
+</p>
+
+<p class="flow-text">
+  Secondly, it was adopted too rapidly. See: the mention of critical bugs before, and the fact that the Linux ecosystem was not 
+  ready for a change of such a caliber. What I mean is a migration from convoluted and ugly System V init Shell scripts to 
+  poorly-documented, beta-quality service unit definitions in INI format. Things could and did go horribly wrong sometimes, like 
+  services failing and getting constantly restarted without ever reaching an <em>active</em> state or services blocking each 
+  other due to unfulfilled dependencies. 
+</p>
+
+<p class="flow-text">
+  Thirdly, systemd led to accidental vendor lock-in in the case of major projects like the KDE and GNOME desktop environments. 
+  This fact was somewhat neglected, because systemd was being continuously marketed as modern, intuitive and useful. This is true 
+  to some extent, but I feel that the Linux ecosystem suffered more than it profited from this arrangement. After all, the very 
+  definition of Linux has always been <b>choice</b>. The right to decide on the distribution, installed software, programming 
+  environment. Perhaps also the init system? We used to have System V init scripts, Upstart, OpenRC, etc. I admit, none of these 
+  systems is / was perfect, but up until now we at least had a choice. Let's have a look at OpenRC as a case study.
+</p>
+
+<p class="flow-text">
+  OpenRC is one of the init system options available in Gentoo (systemd being the other). It utilizes a global Unix-inspired 
+  configuration file <code>/etc/rc.conf</code> to manage core aspects of the boot process. OpenRC also handles drive mounting and 
+  manages system services via the <code>rc-service</code> module. In principle, it serves the same role as systemd with a number 
+  of exceptions:
+</p>
+
+<ul class="collection">
+  <li class="collection-item">
+    Init scripts are independent of each other and a broken service can be quickly restored (systemd routes services through a 
+    central supervisor called <code>systemctl</code>, which if broken, makes systemd unusable)
+  </li>
+  <li class="collection-item">
+    OpenRC does not replace anything nor does it force users to rely on it. It is a service manager / init system and nothing 
+    more. 
+  </li>
+</ul>
+
+<p class="flow-text">
+  As nothing directly depends on OpenRC, I am free to do whatever I want with my operating system. Problems start when one 
+  wants to use a more feature-complete desktop environment like MATE, for instance. It's similar to Xfce, GNOME3 and KDE, but 
+  more akin to the look and feel of GNOME2. Hence, a perfectly reasonable choice, even for weaker computers. However, in order to 
+  use any of the major desktops one needs systemd or at least some bits of it.
+</p>
+
+<p class="flow-text">
+  I find it quite reasonable that popular desktop environments try to take advantage of systemd, but why, God why, does it have 
+  to be mandatory? Why do I need to limit myself to a specific init system, and often by extension to a specific range of 
+  distributions (systemd is already quite widespread) to enjoy Linux?
+</p>
+
+<p class="flow-text">
+  I don’t want to sound like one of those tinfoil hat aficionados, but the current systemd craze is slightly troubling, because 
+  it brings us a big step closer to Windows and its flaws. Let's bear that in mind!
+</p>
