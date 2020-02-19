@@ -44,7 +44,7 @@
     <div class="row">
 
       <!--Current blog entry text area-->
-      <div class="col s10">
+      <div class="col s9">
         <h2 class="header red-text text-accent-1">
           {{.EntryTitle}}
         </h2>
@@ -83,22 +83,23 @@
       </div>
 
       <!--Blog entry links area-->
-      <div class="col s2">
+      <div class="col s3">
         <h1 class="header"></h1>
-        <a href="#sidenav" class="sidenav-trigger btn waves-effect waves-light" data-target="slide-out">Other Entries
-          <i class="material-icons right">forward</i>
-        </a>
-        <ul id="slide-out" class="sidenav">
-          <li><h3 class="header center-align red-text text-accent-1">Previously...</h3></li>
+        <ul class="collapsible">
           <li>
-            <h3 class="header"></h3>
-            <div class="collection">
-              {{range $entryID, $entry := .BlogEntries}}
-              <a href="/{{$entryID}}" class="collection-item">{{$entry.Title}}</a>
-              {{end}}
+            <div class="collapsible-header red-text text-accent-1">
+              <i class="material-icons right">forward</i>
+              Other Entries
+            </div>
+            <div class="collapsible-body">
+              <div class="collection">
+                {{range $entryID, $entry := .BlogEntries}}
+                <a href="/{{$entryID}}" class="collection-item">{{$entry.Title}}</a>
+                {{end}}
+              </div>
             </div>
           </li>
-       </ul>
+        </ul>
      </div>
 
       <!--TODO: Comments area?-->
@@ -106,15 +107,13 @@
 
     <!--Compiled and minified JavaScript-->
     <script type="text/javascript" src="/static/js/materialize.min.js"></script>
+
     <!--DOM triggers-->
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var options = {
-          "edge": "right",
-          "draggable": true
-        };
-        var instances = M.Sidenav.init(elems, options);
+        var elems = document.querySelectorAll('.collapsible');
+        var options = {};
+        var instances = M.Collapsible.init(elems, options);
       });
     </script>
   </body>
