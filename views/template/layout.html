@@ -44,8 +44,8 @@
     <div class="row">
 
       <!--Current blog entry text area-->
-      <div class="col s8">
-        <h2>
+      <div class="col s10">
+        <h2 class="header red-text text-accent-1">
           {{.EntryTitle}}
         </h2>
         {{if .EntryID | isValidEntry}}
@@ -83,20 +83,40 @@
       </div>
 
       <!--Blog entry links area-->
-      <div class="col">
-        <h3 class="header">Other Entries</h3>
-        <div class="collection">
-          {{range $entryID, $entry := .BlogEntries}}
-          <a class="collection-item" href="/{{$entryID}}">{{$entry.Title}}</a>
-          {{end}}
-        </div>
-      </div>
+      <div class="col s2">
+        <h1 class="header"></h1>
+        <a href="#sidenav" class="sidenav-trigger btn waves-effect waves-light" data-target="slide-out">Other Entries
+          <i class="material-icons right">forward</i>
+        </a>
+        <ul id="slide-out" class="sidenav">
+          <li><h3 class="header center-align red-text text-accent-1">Previously...</h3></li>
+          <li>
+            <h3 class="header"></h3>
+            <div class="collection">
+              {{range $entryID, $entry := .BlogEntries}}
+              <a href="/{{$entryID}}" class="collection-item">{{$entry.Title}}</a>
+              {{end}}
+            </div>
+          </li>
+       </ul>
+     </div>
 
       <!--TODO: Comments area?-->
     </div>
 
     <!--Compiled and minified JavaScript-->
     <script type="text/javascript" src="/static/js/materialize.min.js"></script>
+    <!--DOM triggers-->
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var options = {
+          "edge": "right",
+          "draggable": true
+        };
+        var instances = M.Sidenav.init(elems, options);
+      });
+    </script>
   </body>
   <footer>
   </footer>
