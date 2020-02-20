@@ -7,7 +7,7 @@ import (
 	"github.com/astaxie/beego"
 )
 
-// RouteController is a composition wrapper around `beego.Controller`
+// RouteController is the main endpoint controller
 type RouteController struct {
 	beego.Controller
 	EntryRecords map[string]models.Entry
