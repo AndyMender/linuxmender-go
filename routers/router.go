@@ -56,7 +56,7 @@ func PreviousEntry(entryID string) string {
 
 // IsValidEntry checks whether the input entry ID is valid
 func IsValidEntry(entryID string) bool {
-	// Only nmerical entries are truly valid
+	// Only numerical entries are truly valid
 	if _, err := strconv.Atoi(entryID); err == nil {
 		return true
 	}
