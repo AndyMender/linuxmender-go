@@ -1,4 +1,9 @@
 {
+  "032": {
+    "Title": "Freedom to Freedom",
+    "DatePosted": "June 24th, 2015",
+    "Tags": []
+  },
   "031": {
     "Title": "Systemd - The Lurking Serpent",
     "DatePosted": "June 14th, 2015",
@@ -55,7 +60,7 @@
     "Tags": []
   },
   "020": {
-    "Title": "Shrouded with GUIs...",
+    "Title": "Shrouded with GUIs",
     "DatePosted": "February 15th, 2015",
     "Tags": []
   },
@@ -110,7 +115,7 @@
     "Tags": []
   },
   "009": {
-    "Title": "All Roads Lead to Debian...",
+    "Title": "All Roads Lead to Debian",
     "DatePosted": "December 6th, 2014",
     "Tags": []
   },
@@ -120,7 +125,7 @@
     "Tags": []
   },
   "007": {
-    "Title": "Desktop Environments – Choosing my favorite Linux GUIdes!"   ,
+    "Title": "Desktop Environments – Choosing my favorite Linux GUIdes!",
     "DatePosted": "December 4th, 2014",
     "Tags": []
   },
