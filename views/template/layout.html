@@ -62,7 +62,7 @@
         <a class="waves-effect waves-light btn"><i class="material-icons">thumb_up_alt</i></a>
         {{end}}
 
-        <p><em>{{.DatePosted}}</em></p>
+        <p><em>Posted on {{.DatePosted}}</em></p>
 
         <!--Content from blog entries-->
         {{.LayoutContent}}
@@ -94,7 +94,7 @@
             <div class="collapsible-body">
               <div class="collection">
                 {{range $entryID, $entry := .BlogEntries}}
-                <a href="/{{$entryID}}" class="collection-item">{{$entry.Title}}</a>
+                <a href="/{{$entryID}}" class="collection-item">{{$entry.ID}} - {{$entry.Title}}</a>
                 {{end}}
               </div>
             </div>
