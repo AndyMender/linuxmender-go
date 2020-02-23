@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.3'
 
 services:
   # main Web app
@@ -13,3 +13,24 @@ services:
       - "8080:8080"
 
     command: app
+    
+    depends_on:
+      - redis
+  
+  # db for dynamic data
+  redis:
+    image: "redis:5"
+    configs:
+      - source: redis_config
+        target: /etc/redis.conf
+        uid: "969"
+        gid: "969"
+        mode: 0440
+    
+    ports:
+      - "6379: 6579"
+
+configs:
+  redis_config:
+    file: /usr/local/share/redis/redis.conf
+
