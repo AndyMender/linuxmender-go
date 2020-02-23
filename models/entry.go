@@ -78,11 +78,8 @@ func InsertEntryMany(entries map[string]Entry, db *sql.DB) {
 
 // GetEntryOne returns a single Entry record from a SQL table
 func GetEntryOne(entryID int, db *sql.DB) *Entry {
-	// Create a blank Entry record
-	entry := &Entry{}
-
 	// Create a "prepared" SQL statement context
-	sqlQuery := "SELECT id, title, date_posted, tags FROM entries WHERE id = ?"
+	sqlQuery := "SELECT title, date_posted, tags FROM entries WHERE id = ?"
 	readyStatement, err := db.Prepare(sqlQuery)
 	if err != nil {
 		log.Println(err)
@@ -90,18 +87,21 @@ func GetEntryOne(entryID int, db *sql.DB) *Entry {
 	}
 	defer readyStatement.Close()
 
-	// Fetch entry record
-	var tagsText string
-	err = readyStatement.QueryRow(entryID).Scan(&entry.ID, &entry.Title, &entry.DatePosted, &tagsText)
+	// Fetch Entry record
+	var title, datePosted, tagsText string
+	err = readyStatement.QueryRow(entryID).Scan(&title, &datePosted, &tagsText)
 	if err != nil {
 		log.Println(err)
 		return nil
 	}
 
-	// Convert tags to a slice
-	entry.Tags = strings.Split(tagsText, ",")
-
-	return entry
+	// Populate Entry record
+	return &Entry{
+		ID:         entryID,
+		Title:      title,
+		DatePosted: datePosted,
+		Tags:       strings.Split(tagsText, ","),
+	}
 }
 
 // GetEntriesAll returns all Entry records from a SQL table
