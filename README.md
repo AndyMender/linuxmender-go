@@ -5,10 +5,16 @@ A small Web development project for my personal website/blog. *It's largely a wo
 Introduction
 ---
 
-This project is being built using:
-- front-end: HTML/CSS with probably [Materialize](https://materializecss.com) and [beego](https://github.com/astaxie/beego)
-- back-end: [Go](https://golang.org/)
-- Web serving (WIP): [caddy](https://caddyserver.com/) and [Docker](https://www.docker.com/)
+**Front-end:**  
+    - HTML/CSS via [Materialize](https://materializecss.com)
+    - dynamic HTML templating via [beego](https://github.com/astaxie/beego)  
+**Back-end:**  
+    - MVC via [beego](https://github.com/astaxie/beego)
+    - Data models via [sqlite3](https://sqlite.org/index.html)  
+**Web serving (WIP):**  
+    - reverse-proxy & load-balancing via [caddy](https://caddyserver.com/)  
+**Deployment (WIP):**  
+    - containerization via [Docker](https://www.docker.com/)  
 
 The project follows the [MVC design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller), though as implemented by the Ruby on Rails project, rather than by Django. I also took some liberty in the way routing controller objects are spawned and generic HTTP responses handled.
 
@@ -21,3 +27,4 @@ Requirements
 ---
 * https://github.com/smartystreets/goconvey/convey
 * https://github.com/astaxie/beego
+* https://github.com/mattn/go-sqlite3
