@@ -12,6 +12,7 @@ import (
 )
 
 func init() {
+
 	// Create central route controller object
 	ctrl := &controllers.RouteController{
 		EntryRecords: models.GetEntries(paths.EntriesPath),
@@ -33,7 +34,7 @@ func NextEntry(entryID string) string {
 		return entryID
 	}
 
-	return fmt.Sprintf("%03d", entryNumber+1)
+	return fmt.Sprintf("%d", entryNumber+1)
 }
 
 // PreviousEntry tries to get the previous entry ID
@@ -51,7 +52,7 @@ func PreviousEntry(entryID string) string {
 		return entryID
 	}
 
-	return fmt.Sprintf("%03d", entryNumber)
+	return fmt.Sprintf("%d", entryNumber)
 }
 
 // IsValidEntry checks whether the input entry ID is valid
