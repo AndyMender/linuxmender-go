@@ -20,7 +20,7 @@ func CreateEntriesTable(db *sql.DB) error {
       id INTEGER NOT NULL PRIMARY KEY,
       title TEXT NOT NULL,
 			date_posted TEXT NOT NULL,
-			tags TEXT DEFAULT NULL
+			tags TEXT DEFAULT ''
 		);
 	`
 
