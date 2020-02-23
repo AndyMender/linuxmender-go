@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	"log"
-	"strconv"
 	"strings"
 )
 
@@ -66,7 +65,7 @@ func InsertEntryMany(entries map[string]Entry, db *sql.DB) {
 	}
 	defer readyStatement.Close()
 
-	// Loop over entry records and insert them one by one
+	// Loop over Entry records and insert them one by one
 	for _, entry := range entries {
 		_, err = readyStatement.Exec(entry.ID, entry.Title, entry.DatePosted, strings.Join(entry.Tags, ","))
 		if err != nil {
@@ -105,8 +104,8 @@ func GetEntryOne(entryID int, db *sql.DB) *Entry {
 }
 
 // GetEntriesAll returns all Entry records from a SQL table
-func GetEntriesAll(db *sql.DB) map[string]*Entry {
-	entryRecords := make(map[string]*Entry)
+func GetEntriesAll(db *sql.DB) map[int]*Entry {
+	entryRecords := make(map[int]*Entry)
 
 	// Generate a Rows iterator from a SQL query
 	sqlQuery := "SELECT id, title, date_posted, tags FROM entries"
@@ -117,7 +116,7 @@ func GetEntriesAll(db *sql.DB) map[string]*Entry {
 	}
 	defer rows.Close()
 
-	// Iterate over rows and populate entry records
+	// Iterate over rows and populate Entry records
 	for rows.Next() {
 		var (
 			entryID                     int
@@ -127,10 +126,10 @@ func GetEntriesAll(db *sql.DB) map[string]*Entry {
 		err = rows.Scan(&entryID, &title, &datePosted, &tagsText)
 		if err != nil {
 			log.Println(err)
-			break
+			return nil
 		}
 
-		entryRecords[strconv.Itoa(entryID)] = &Entry{
+		entryRecords[entryID] = &Entry{
 			ID:         entryID,
 			Title:      title,
 			DatePosted: datePosted,

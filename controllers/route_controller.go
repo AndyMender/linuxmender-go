@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"linuxmender/models"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -10,7 +11,7 @@ import (
 // RouteController is the main endpoint controller
 type RouteController struct {
 	beego.Controller
-	EntryRecords map[string]*models.Entry
+	EntryRecords map[int]*models.Entry
 }
 
 // Prepare performs an initial setup before running any other method
@@ -38,7 +39,7 @@ func (ctrl *RouteController) GetEntry() {
 	// ctrl.LayoutSections = make(map[string]string)
 
 	// Get entry ID and fetch matching entry details
-	entryID := ctrl.Ctx.Input.Param(":entry")
+	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entry"))
 
 	entry, ok := ctrl.EntryRecords[entryID]
 
@@ -55,7 +56,7 @@ func (ctrl *RouteController) GetEntry() {
 	ctrl.Data["EntryTitle"] = entry.Title
 	ctrl.Data["DatePosted"] = entry.DatePosted
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
-	ctrl.Data["EntryID"] = entryID
+	ctrl.Data["EntryID"] = strconv.Itoa(entryID)
 }
 
 // Error404 generates route details for the 404 response page
