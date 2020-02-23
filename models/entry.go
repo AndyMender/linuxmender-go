@@ -8,6 +8,7 @@ import (
 
 // Entry is a definition for Blog entry objects
 type Entry struct {
+	ID                int
 	Title, DatePosted string
 	Tags              []string
 }
