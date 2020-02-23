@@ -2,8 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"encoding/json"
-	"io/ioutil"
 	"log"
 	"strconv"
 	"strings"
@@ -139,21 +137,6 @@ func GetEntriesAll(db *sql.DB) map[string]*Entry {
 			Tags:       strings.Split(tagsText, ","),
 		}
 	}
-
-	return entryRecords
-}
-
-// GetEntries reads the entries JSON file and returns a slice of Entry records
-func GetEntries(entriesPath string) map[string]*Entry {
-	entryRecords := make(map[string]*Entry)
-
-	entriesText, err := ioutil.ReadFile(entriesPath)
-	if err != nil {
-		log.Printf("%v is invalid. Cannot load entry definitions.\n", entriesPath)
-		return nil
-	}
-
-	json.Unmarshal(entriesText, &entryRecords)
 
 	return entryRecords
 }

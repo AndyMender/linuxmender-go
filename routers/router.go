@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"database/sql"
 	"linuxmender/controllers"
 	"linuxmender/models"
 	"linuxmender/paths"
@@ -8,15 +9,20 @@ import (
 	"strconv"
 
 	"github.com/astaxie/beego"
+	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
 )
 
 func init() {
-
-	entries := models.GetEntries(paths.EntriesPath)
+	// Open database with static data
+	db, err := sql.Open("sqlite3", paths.EntriesDBPath)
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.Close()
 
 	// Create central route controller object
 	ctrl := &controllers.RouteController{
-		EntryRecords: entries,
+		EntryRecords: models.GetEntriesAll(db),
 	}
 
 	// Register controller for error handling

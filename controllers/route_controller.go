@@ -10,7 +10,7 @@ import (
 // RouteController is the main endpoint controller
 type RouteController struct {
 	beego.Controller
-	EntryRecords map[string]models.Entry
+	EntryRecords map[string]*models.Entry
 }
 
 // Prepare performs an initial setup before running any other method
@@ -38,7 +38,7 @@ func (ctrl *RouteController) GetEntry() {
 	// ctrl.LayoutSections = make(map[string]string)
 
 	// Get entry ID and fetch matching entry details
-	var entryID string = ctrl.Ctx.Input.Param(":entry")
+	entryID := ctrl.Ctx.Input.Param(":entry")
 
 	entry, ok := ctrl.EntryRecords[entryID]
 
