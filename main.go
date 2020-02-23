@@ -2,7 +2,6 @@ package main
 
 import (
 	"linuxmender/routers"
-	_ "linuxmender/routers"
 
 	"github.com/astaxie/beego"
 )
