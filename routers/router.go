@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"fmt"
 	"linuxmender/controllers"
 	"linuxmender/models"
 	"linuxmender/paths"
@@ -13,9 +12,11 @@ import (
 
 func init() {
 
+	entries := models.GetEntries(paths.EntriesPath)
+
 	// Create central route controller object
 	ctrl := &controllers.RouteController{
-		EntryRecords: models.GetEntries(paths.EntriesPath),
+		EntryRecords: entries,
 	}
 
 	// Register controller for error handling
@@ -34,7 +35,7 @@ func NextEntry(entryID string) string {
 		return entryID
 	}
 
-	return fmt.Sprintf("%d", entryNumber+1)
+	return strconv.Itoa(entryNumber + 1)
 }
 
 // PreviousEntry tries to get the previous entry ID
@@ -52,7 +53,7 @@ func PreviousEntry(entryID string) string {
 		return entryID
 	}
 
-	return fmt.Sprintf("%d", entryNumber)
+	return strconv.Itoa(entryNumber)
 }
 
 // IsValidEntry checks whether the input entry ID is valid
