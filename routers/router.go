@@ -21,16 +21,16 @@ func init() {
 	defer db.Close()
 
 	// Create central route controller object
-	ctrl := &controllers.RouteController{
+	mainController := &controllers.RouteController{
 		EntryRecords: models.GetEntriesAll(db),
 	}
 
 	// Register controller for error handling
-	beego.ErrorController(ctrl)
+	beego.ErrorController(mainController)
 
 	// Attach controller callback object to URL paths
-	beego.Router("/", ctrl, "get:GetIndex")
-	beego.Router("/:entry", ctrl, "get:GetEntry")
+	beego.Router("/", mainController, "get:GetIndex")
+	beego.Router("/:entry", mainController, "get:GetEntry")
 }
 
 // NextEntry tries to get the consecutive entry ID
