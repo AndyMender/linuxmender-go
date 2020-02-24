@@ -21,6 +21,10 @@ func init() {
 	}
 	defer db.Close()
 
+	entryManager := models.EntryManager{
+		DB: db,
+	}
+
 	// Create auxilliary score controller object
 	auxController := &controllers.ScoreController{
 		RedisClient: redis.NewClient(&redis.Options{
@@ -32,7 +36,7 @@ func init() {
 
 	// Create central route controller object
 	mainController := &controllers.RouteController{
-		EntryRecords: models.GetEntriesAll(db),
+		EntryRecords: entryManager.GetEntriesAll(),
 	}
 
 	// Register controller for error handling
