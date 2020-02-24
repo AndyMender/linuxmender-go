@@ -10,6 +10,7 @@ import (
 
 	"github.com/astaxie/beego"
 	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
+	"github.com/go-redis/redis"
 )
 
 func init() {
@@ -19,6 +20,15 @@ func init() {
 		log.Println(err)
 	}
 	defer db.Close()
+
+	// Create auxilliary score controller object
+	auxController := &controllers.ScoreController{
+		RedisClient: redis.NewClient(&redis.Options{
+			Addr:     "localhost:6379",
+			Password: "", // no password set
+			DB:       1,  // use default DB
+		}),
+	}
 
 	// Create central route controller object
 	mainController := &controllers.RouteController{
@@ -30,7 +40,8 @@ func init() {
 
 	// Attach controller callback object to URL paths
 	beego.Router("/", mainController, "get:GetIndex")
-	beego.Router("/:entry", mainController, "get:GetEntry")
+	beego.Router("/posts/:entry", mainController, "get:GetEntry")
+	beego.Router("/api/endorse", auxController, "post:LikeEntry")
 }
 
 // NextEntry tries to get the consecutive entry ID
