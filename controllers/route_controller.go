@@ -21,6 +21,7 @@ func (ctrl *RouteController) Prepare() {
 }
 
 // GetIndex generates route details for the default index page
+// @router /
 func (ctrl *RouteController) GetIndex() {
 	// Load main HTML text block into LayoutContent field
 	ctrl.TplName = "pages/index.html"
@@ -34,6 +35,7 @@ func (ctrl *RouteController) GetIndex() {
 }
 
 // GetEntry generates route details for blog entry pages
+// @router /posts/:entry
 func (ctrl *RouteController) GetEntry() {
 	// Additional dynamic layout sections?
 	// ctrl.LayoutSections = make(map[string]string)
