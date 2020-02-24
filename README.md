@@ -6,11 +6,12 @@ Introduction
 ---
 
 **Front-end:**  
-    - HTML/CSS via [Materialize](https://materializecss.com)
+    - HTML/CSS via [Materialize](https://materializecss.com)  
     - dynamic HTML templating via [beego](https://github.com/astaxie/beego)  
 **Back-end:**  
-    - MVC via [beego](https://github.com/astaxie/beego)
-    - Data models via [sqlite3](https://sqlite.org/index.html)  
+    - MVC via [beego](https://github.com/astaxie/beego)  
+    - Static data definitions via [sqlite3](https://sqlite.org/index.html)  
+    - Dynamic data definitions via [redis](https://redis.io/) 
 **Web serving (WIP):**  
     - reverse-proxy & load-balancing via [caddy](https://caddyserver.com/)  
 **Deployment (WIP):**  
@@ -28,3 +29,4 @@ Requirements
 * https://github.com/smartystreets/goconvey/convey
 * https://github.com/astaxie/beego
 * https://github.com/mattn/go-sqlite3
+* https://github.com/go-redis/redis
