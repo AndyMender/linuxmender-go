@@ -15,13 +15,13 @@ type RouteController struct {
 }
 
 // Prepare performs an initial setup before running any other method
-func (ctrl RouteController) Prepare() {
+func (ctrl *RouteController) Prepare() {
 	// Attach base page layout
 	ctrl.Layout = "template/layout.html"
 }
 
 // GetIndex generates route details for the default index page
-func (ctrl RouteController) GetIndex() {
+func (ctrl *RouteController) GetIndex() {
 	// Load main HTML text block into LayoutContent field
 	ctrl.TplName = "pages/index.html"
 
@@ -34,7 +34,7 @@ func (ctrl RouteController) GetIndex() {
 }
 
 // GetEntry generates route details for blog entry pages
-func (ctrl RouteController) GetEntry() {
+func (ctrl *RouteController) GetEntry() {
 	// Additional dynamic layout sections?
 	// ctrl.LayoutSections = make(map[string]string)
 
@@ -60,7 +60,7 @@ func (ctrl RouteController) GetEntry() {
 }
 
 // Error404 generates route details for the 404 response page
-func (ctrl RouteController) Error404() {
+func (ctrl *RouteController) Error404() {
 	// Load main HTML text block into LayoutContent field
 	ctrl.TplName = "pages/notfound.html"
 
