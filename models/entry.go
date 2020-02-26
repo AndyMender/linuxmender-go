@@ -2,9 +2,13 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"time"
 	"strings"
 )
+
+const dateFormat = "06-01-02"
 
 // Entry is a definition for blog Entry objects
 type Entry struct {
@@ -143,4 +147,34 @@ func (mgr *EntryManager) GetEntriesAll() map[int]*Entry {
 	}
 
 	return entryRecords
+}
+
+func parseDate(timeString string) string {
+	// Load date string into Time object
+	parsedTime, err := time.Parse("2006-01-02", timeString)
+	if err != nil {
+		log.Printf("Couldn't properly parse date string %v. Returning as is.\n", timeString)
+		return timeString
+	}
+
+	// Decide on the day of month string ending 
+	dayEnding := ""
+	switch (parsedTime.Day()) {
+	case 1:
+		dayEnding = "st"
+	case 2:
+		dayEnding = "nd"
+	case 3:
+		dayEnding = "rd"
+	default:
+		dayEnding = "th"
+	}
+
+	return fmt.Sprintf(
+		"%s %d%s, %d", 
+		parsedTime.Month(), 
+		parsedTime.Day(), 
+		dayEnding, 
+		parsedTime.Year(),
+	)
 }
