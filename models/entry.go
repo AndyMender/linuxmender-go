@@ -141,7 +141,7 @@ func (mgr *EntryManager) GetEntriesAll() map[int]*Entry {
 		entryRecords[entryID] = &Entry{
 			ID:         entryID,
 			Title:      title,
-			DatePosted: datePosted,
+			DatePosted: parseDate(datePosted),
 			Tags:       strings.Split(tagsText, ","),
 		}
 	}
@@ -159,7 +159,7 @@ func parseDate(timeString string) string {
 
 	// Decide on the day of month string ending 
 	dayEnding := ""
-	switch (parsedTime.Day()) {
+	switch (parsedTime.Day() % 10) {
 	case 1:
 		dayEnding = "st"
 	case 2:
