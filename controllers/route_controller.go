@@ -32,6 +32,7 @@ func (ctrl *RouteController) GetIndex() {
 	ctrl.Data["DatePosted"] = "February 1st, 2020"
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 	ctrl.Data["EntryID"] = ""
+	ctrl.Data["ValidEntry"] = false
 }
 
 // GetEntry generates route details for blog entry pages
@@ -59,6 +60,7 @@ func (ctrl *RouteController) GetEntry() {
 	ctrl.Data["DatePosted"] = entry.DatePosted
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 	ctrl.Data["EntryID"] = strconv.Itoa(entryID)
+	ctrl.Data["ValidEntry"] = true
 }
 
 // Error404 generates route details for the 404 response page
@@ -72,4 +74,5 @@ func (ctrl *RouteController) Error404() {
 	ctrl.Data["DatePosted"] = ""
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 	ctrl.Data["EntryID"] = "notfound"
+	ctrl.Data["ValidEntry"] = false
 }

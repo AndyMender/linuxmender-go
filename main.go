@@ -10,7 +10,6 @@ func main() {
 	// Add custom functions for in-template manipulations
 	beego.AddFuncMap("nextEntry", routers.NextEntry)
 	beego.AddFuncMap("previousEntry", routers.PreviousEntry)
-	beego.AddFuncMap("isValidEntry", routers.IsValidEntry)
 
 	// Run Web server
 	beego.Run()

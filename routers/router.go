@@ -76,13 +76,3 @@ func PreviousEntry(entryID string) string {
 
 	return strconv.Itoa(entryNumber)
 }
-
-// IsValidEntry checks whether the input entry ID is valid
-func IsValidEntry(entryID string) bool {
-	// Only numerical entries are truly valid
-	if _, err := strconv.Atoi(entryID); err == nil {
-		return true
-	}
-
-	return false
-}
