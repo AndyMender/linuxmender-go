@@ -46,11 +46,12 @@ func init() {
 	// Register controller for error handling
 	beego.ErrorController(&controllers.ErrorController{})
 
-	// Attach controller callback object to URL paths
+	// Attach controller callback objects to URL paths
 	beego.Router("/", mainController, "get:GetIndex")
 	beego.Router("/posts/:entryid:int", mainController, "get:GetEntry")
 	beego.Router("/posts/:entryid:int/next", mainController, "get:GetEntryNext")
 	beego.Router("/posts/:entryid:int/previous", mainController, "get:GetEntryPrevious")
-	beego.Router("/posts/:entryid:int/endorse", auxController, "post:LikeEntry")
-	beego.Router("/posts/:entryid:int/likes", auxController, "get:GetLikes")
+
+	beego.Router("/api/endorse/:entryid:int", auxController, "post:LikeEntry")
+	beego.Router("/api/likes/:entryid:int", auxController, "get:GetLikes")
 }
