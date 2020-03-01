@@ -17,7 +17,7 @@ type ScoreController struct {
 }
 
 // LikeEntry adds +1 "like" to the score for a given blog entry
-// @router /posts/:entryid/endorse
+// @router /api/endorse/:entryid
 func (ctrl *ScoreController) LikeEntry() {
 	// Generate a UUID to link session with back-end
 	uuidString := uuid.New().String()
@@ -39,13 +39,18 @@ func (ctrl *ScoreController) LikeEntry() {
 }
 
 // GetLikes fetches the "likes" score for a blog entry from the back-end
-// @router /posts/:entryid/likes
+// @router /api/likes:entryid
 func (ctrl *ScoreController) GetLikes() {
 	// Get entryID for current entry
 	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
 
 	fmt.Println(entryID)
-	_ = ctrl.Mgr.GetLikes(entryID)
+	score := ctrl.Mgr.GetLikes(entryID)
+
+	ctrl.Data["json"] = map[string]interface{}{
+		"entryID": entryID,
+		"likes": score,
+	}
 
 	ctrl.ServeJSON()
 }
