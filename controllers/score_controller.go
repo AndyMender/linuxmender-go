@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -44,7 +43,6 @@ func (ctrl *ScoreController) GetLikes() {
 	// Get entryID for current entry
 	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
 
-	fmt.Println(entryID)
 	score := ctrl.Mgr.GetLikes(entryID)
 
 	ctrl.Data["json"] = map[string]interface{}{
