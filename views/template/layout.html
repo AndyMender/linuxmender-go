@@ -121,13 +121,13 @@
 
       button.addEventListener("click", function() {
         if (!sessionStorage.likeClicked) {
-          fetch("/api/endorse", {
+          fetch("/posts/{{.EntryID}}/endorse", {
             headers: {
               "Accept": "application/json",
               "Content-Type": "application/json"
             },
             method: "POST",
-            body: JSON.stringify({"ID": "{{.EntryID}}"})
+            body: "{}"
           });
           sessionStorage.likeClicked = true;
         }
