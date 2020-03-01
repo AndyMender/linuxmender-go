@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -33,6 +34,18 @@ func (ctrl *ScoreController) LikeEntry() {
 
 	// Endorse entry
 	ctrl.Mgr.LikeEntry(sessionID.(string), entryID)
+
+	ctrl.ServeJSON()
+}
+
+// GetLikes fetches the "likes" score for a blog entry from the back-end
+// @router /posts/:entryid/likes
+func (ctrl *ScoreController) GetLikes() {
+	// Get entryID for current entry
+	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
+
+	fmt.Println(entryID)
+	_ = ctrl.Mgr.GetLikes(entryID)
 
 	ctrl.ServeJSON()
 }
