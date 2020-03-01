@@ -1,18 +1,20 @@
 package controllers
 
 import (
-	"github.com/google/uuid"
-	"github.com/astaxie/beego"
-	"github.com/go-redis/redis"
 	"fmt"
 	"strconv"
 	"encoding/json"
+
+	"github.com/google/uuid"
+	"github.com/astaxie/beego"
+
+	"linuxmender/models"
 )
 
 // ScoreController is a controller for getting "likes" and "visitors" scores
 type ScoreController struct {
 	beego.Controller
-	RedisClient *redis.Client
+	Mgr *models.ScoreManager
 }
 
 // LikeEntry adds +1 "like" to the score for a given blog entry

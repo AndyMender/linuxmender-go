@@ -2,14 +2,15 @@ package routers
 
 import (
 	"database/sql"
-	"linuxmender/controllers"
-	"linuxmender/models"
-	"linuxmender/paths"
 	"log"
 
 	"github.com/astaxie/beego"
-	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
 	"github.com/go-redis/redis"
+	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
+
+	"linuxmender/controllers"
+	"linuxmender/models"
+	"linuxmender/paths"
 )
 
 func init() {
@@ -20,17 +21,21 @@ func init() {
 	}
 	defer db.Close()
 
-	entryManager := models.EntryManager{
+	// Initialize managers
+	entryManager := &models.EntryManager{
 		DB: db,
 	}
-
-	// Create auxilliary score controller object
-	auxController := &controllers.ScoreController{
-		RedisClient: redis.NewClient(&redis.Options{
+	scoreManager := &models.ScoreManager{
+		Conn: redis.NewClient(&redis.Options{
 			Addr:     "localhost:6379",
 			Password: "", // no password set
 			DB:       1,  // use default DB
 		}),
+	}
+
+	// Create auxilliary score controller object
+	auxController := &controllers.ScoreController{
+		Mgr: scoreManager,
 	}
 
 	// Create central route controller object
