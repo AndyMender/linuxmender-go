@@ -27,6 +27,7 @@ If you're curious how the Web page looks at the moment, it can be built and run 
 Requirements
 ---
 * https://github.com/smartystreets/goconvey/convey
+* https://github.com/google/uuid
 * https://github.com/astaxie/beego
 * https://github.com/mattn/go-sqlite3
 * https://github.com/go-redis/redis
