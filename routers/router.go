@@ -36,7 +36,7 @@ func init() {
 
 	// Create central route controller object
 	mainController := &controllers.RouteController{
-		EntryRecords: entryManager.GetEntriesAll(),
+		EntryRecords: entryManager.GetAll(),
 	}
 
 	// Register controller for error handling

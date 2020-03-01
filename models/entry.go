@@ -22,8 +22,8 @@ type EntryManager struct {
 	DB	*sql.DB
 }
 
-// CreateEntriesTable creates an SQL table for storing blog entries
-func (mgr *EntryManager) CreateEntriesTable() error {
+// CreateTable creates an SQL table for storing blog entries
+func (mgr *EntryManager) CreateTable() error {
 	sqlQuery := `
 		CREATE TABLE IF NOT EXISTS entries (
       		id INTEGER NOT NULL PRIMARY KEY,
@@ -42,8 +42,8 @@ func (mgr *EntryManager) CreateEntriesTable() error {
 	return nil
 }
 
-// InsertEntryOne inserts a single Entry record into a SQL table
-func (mgr *EntryManager) InsertEntryOne(entry *Entry) {
+// InsertOne inserts a single Entry record into a SQL table
+func (mgr *EntryManager) InsertOne(entry *Entry) {
 	sqlQuery := "INSERT INTO entries (id, title, date_posted, tags) VALUES (?, ?, ?, ?)"
 
 	// Create a "prepared" SQL statement context
@@ -55,15 +55,20 @@ func (mgr *EntryManager) InsertEntryOne(entry *Entry) {
 	defer readyStatement.Close()
 
 	// Execute statement
-	_, err = readyStatement.Exec(entry.ID, entry.Title, entry.DatePosted, strings.Join(entry.Tags, ","))
+	_, err = readyStatement.Exec(
+		entry.ID, 
+		entry.Title, 
+		entry.DatePosted, 
+		strings.Join(entry.Tags, ","),
+	)
 	if err != nil {
 		log.Println(err)
 	}
 
 }
 
-// InsertEntryMany is analogous to InsertEntryOne, but accepts a slice of Entry records
-func (mgr *EntryManager) InsertEntryMany(entries map[string]Entry) {
+// InsertMany is analogous to InsertOne, but accepts a map of Entry records
+func (mgr *EntryManager) InsertMany(entries map[string]*Entry) {
 	sqlQuery := "INSERT INTO entries (id, title, date_posted, tags) VALUES (?, ?, ?, ?)"
 
 	// Create a "prepared" SQL statement context
@@ -76,7 +81,12 @@ func (mgr *EntryManager) InsertEntryMany(entries map[string]Entry) {
 
 	// Loop over Entry records and insert them one by one
 	for _, entry := range entries {
-		_, err = readyStatement.Exec(entry.ID, entry.Title, entry.DatePosted, strings.Join(entry.Tags, ","))
+		_, err = readyStatement.Exec(
+			entry.ID, 
+			entry.Title, 
+			entry.DatePosted, 
+			strings.Join(entry.Tags, ","),
+		)
 		if err != nil {
 			log.Println(err)
 			return
@@ -84,8 +94,8 @@ func (mgr *EntryManager) InsertEntryMany(entries map[string]Entry) {
 	}
 }
 
-// GetEntryOne returns a single Entry record from a SQL table
-func (mgr *EntryManager) GetEntryOne(entryID int) *Entry {
+// GetOne returns a single Entry record from a SQL table
+func (mgr *EntryManager) GetOne(entryID int) *Entry {
 	// Create a "prepared" SQL statement context
 	sqlQuery := "SELECT title, date_posted, tags FROM entries WHERE id = ?"
 	readyStatement, err := mgr.DB.Prepare(sqlQuery)
@@ -112,8 +122,8 @@ func (mgr *EntryManager) GetEntryOne(entryID int) *Entry {
 	}
 }
 
-// GetEntriesAll returns all Entry records from a SQL table
-func (mgr *EntryManager) GetEntriesAll() map[int]*Entry {
+// GetAll returns all Entry records from a SQL table
+func (mgr *EntryManager) GetAll() map[int]*Entry {
 	entryRecords := make(map[int]*Entry)
 
 	// Generate a Rows iterator from a SQL query
