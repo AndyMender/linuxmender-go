@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"fmt"
 	"strconv"
-	"encoding/json"
 
 	"github.com/google/uuid"
 	"github.com/astaxie/beego"
@@ -23,21 +21,18 @@ func (ctrl *ScoreController) LikeEntry() {
 	// Generate a UUID to link session with back-end
 	uuidString := uuid.New().String()
 
-	// Get entry ID for current entry
+	// Get entryID for current entry
 	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
 
 	// Get user session
-	sess := ctrl.GetSession("redis")
-	if sess == nil {
+	sessionID := ctrl.GetSession("redis")
+	if sessionID == nil {
 		ctrl.SetSession("redis", uuidString)
+		sessionID = ctrl.GetSession("redis")
 	}
-	fmt.Println(sess)
 
-	fmt.Printf("Endorsed post with ID: %v\n", entryID)
-	var requestBody map[string]interface{}
+	// Endorse entry
+	ctrl.Mgr.LikeEntry(sessionID.(string), entryID)
 
-	// Get entry ID and fetch matching entry details
-	json.Unmarshal(ctrl.Ctx.Input.RequestBody, &requestBody)
-	fmt.Printf("Post request body: %v\n", requestBody)
 	ctrl.ServeJSON()
 }
