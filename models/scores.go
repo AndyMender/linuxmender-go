@@ -40,7 +40,7 @@ func (mgr *ScoreManager) GetSession(uuidString string) (string, bool) {
 }
 
 // LikeEntry bumps the "like" score for a blog entry key
-func (mgr *ScoreManager) LikeEntry(sessionID, entryID string) {
+func (mgr *ScoreManager) LikeEntry(sessionID string, entryID int) {
 	// Get + set user session to avoid superfluous counts
 	if _, ok := mgr.GetSession(sessionID); ok {
 		return
