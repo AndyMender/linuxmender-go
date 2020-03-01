@@ -58,7 +58,7 @@
         </a>
 
         <!--TODO: make "like" button responsive-->
-        <a class="waves-effect waves-light btn">0 likes</a>
+        <a class="waves-effect waves-light btn" id="like-score"></a>
         <a class="waves-effect waves-light btn" id="like-button"><i class="material-icons">thumb_up_alt</i></a>
         {{end}}
 
@@ -121,7 +121,7 @@
 
       button.addEventListener("click", function() {
         if (!sessionStorage.likeClicked) {
-          fetch("/posts/{{.EntryID}}/endorse", {
+          fetch("/api/endorse/{{.EntryID}}", {
             headers: {
               "Accept": "application/json",
               "Content-Type": "application/json"
@@ -131,6 +131,19 @@
           });
           sessionStorage.likeClicked = true;
         }
+      });
+    </script>
+    <script type="text/javascript">
+      fetch("/api/likes/{{.EntryID}}", {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "GET"
+      })
+      .then(function(response) { return response.json(); })
+      .then(function(json) {
+        document.getElementById("like-score").innerHTML = json.likes + " likes";
       });
     </script>
   </body>

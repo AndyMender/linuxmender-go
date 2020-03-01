@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"fmt"
-	"linuxmender/models"
 	"strconv"
 
 	"github.com/astaxie/beego"
+
+	"linuxmender/models"
 )
 
 // RouteController is the main endpoint controller
