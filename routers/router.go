@@ -44,7 +44,7 @@ func init() {
 
 	// Attach controller callback object to URL paths
 	beego.Router("/", mainController, "get:GetIndex")
-	beego.Router("/posts/:entryid", mainController, "get:GetEntry")
+	beego.Router("/posts/:entryid:int", mainController, "get:GetEntry")
 	beego.Router("/api/endorse", auxController, "post:LikeEntry")
 }
 
