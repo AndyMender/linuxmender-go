@@ -48,12 +48,12 @@
         <h2 class="header red-text text-accent-1">
           {{.EntryTitle}}
         </h2>
-        {{if .EntryID | isValidEntry}}
+        {{if .ValidEntry}}
         <!--Next and Back buttons-->
-        <a href="/posts/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Back
+        <a href="/posts/{{.EntryID}}/previous" class="btn waves-effect waves-light" type="submit" name="action">Back
           <i class="material-icons right">fast_rewind</i>
         </a>
-        <a href="/posts/{{.EntryID | nextEntry}}" class="btn waves-effect waves-light" type="submit" name="action">Next
+        <a href="/posts/{{.EntryID}}/next" class="btn waves-effect waves-light" type="submit" name="action">Next
           <i class="material-icons right">fast_forward</i>
         </a>
 
@@ -68,13 +68,13 @@
         {{.LayoutContent}}
 
         <!--Back and Next buttons-->
-        {{if .EntryID | isValidEntry}}
+        {{if .ValidEntry}}
         <div class="center-align">
-          <a href="/posts/{{.EntryID | previousEntry}}" class="btn waves-effect waves-light" type="submit" name="action">
+          <a href="/posts/{{.EntryID}}/previous" class="btn waves-effect waves-light" type="submit" name="action">
             Back
             <i class="material-icons right">fast_rewind</i>
           </a>
-          <a href="/posts/{{.EntryID | nextEntry}}" class="btn waves-effect waves-light" type="submit" name="action">
+          <a href="/posts/{{.EntryID}}/next" class="btn waves-effect waves-light" type="submit" name="action">
             Next
             <i class="material-icons right">fast_forward</i>
           </a>

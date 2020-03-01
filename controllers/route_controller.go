@@ -36,11 +36,8 @@ func (ctrl *RouteController) GetIndex() {
 }
 
 // GetEntry generates route details for blog entry pages
-// @router /posts/:entry
+// @router /posts/:entryid
 func (ctrl *RouteController) GetEntry() {
-	// Additional dynamic layout sections?
-	// ctrl.LayoutSections = make(map[string]string)
-
 	// Get entry ID and fetch matching entry details
 	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
 
@@ -52,15 +49,45 @@ func (ctrl *RouteController) GetEntry() {
 	}
 
 	// Load main HTML text block into LayoutContent field
-	ctrl.TplName = fmt.Sprintf("pages/%v.html", entryID)
+	ctrl.TplName = fmt.Sprintf("pages/%v.html", entry.ID)
 
 	// Populate remaining fields
 	ctrl.Data["Title"] = entry.Title
 	ctrl.Data["EntryTitle"] = entry.Title
 	ctrl.Data["DatePosted"] = entry.DatePosted
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
-	ctrl.Data["EntryID"] = strconv.Itoa(entryID)
+	ctrl.Data["EntryID"] = entry.ID
 	ctrl.Data["ValidEntry"] = true
+}
+
+// GetEntryNext generates entry details for the "next" entry in order
+// @router /posts/:entryid/next
+func (ctrl *RouteController) GetEntryNext() {
+	// Get entry ID for current entry
+	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
+
+	// Repeat current entry or redirect to next if available
+	nextEntryID := entryID + 1
+	if _, ok := ctrl.EntryRecords[nextEntryID]; !ok {
+		ctrl.Redirect(fmt.Sprintf("/posts/%v", entryID), 307)
+	}
+
+	ctrl.Redirect(fmt.Sprintf("/posts/%v", nextEntryID), 307)
+}
+
+// GetEntryPrevious generates entry details for the "previous" entry in order
+// @router /posts/:entryid/previous
+func (ctrl *RouteController) GetEntryPrevious() {
+	// Get entry ID for current entry
+	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
+
+	// Repeat current entry or redirect to previous if available
+	previousEntryID := entryID - 1
+	if _, ok := ctrl.EntryRecords[previousEntryID]; !ok {
+		ctrl.Redirect(fmt.Sprintf("/posts/%v", entryID), 307)
+	}
+
+	ctrl.Redirect(fmt.Sprintf("/posts/%v", previousEntryID), 307)
 }
 
 // Error404 generates route details for the 404 response page

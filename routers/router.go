@@ -6,7 +6,6 @@ import (
 	"linuxmender/models"
 	"linuxmender/paths"
 	"log"
-	"strconv"
 
 	"github.com/astaxie/beego"
 	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
@@ -45,34 +44,7 @@ func init() {
 	// Attach controller callback object to URL paths
 	beego.Router("/", mainController, "get:GetIndex")
 	beego.Router("/posts/:entryid:int", mainController, "get:GetEntry")
+	beego.Router("/posts/:entryid:int/next", mainController, "get:GetEntryNext")
+	beego.Router("/posts/:entryid:int/previous", mainController, "get:GetEntryPrevious")
 	beego.Router("/api/endorse", auxController, "post:LikeEntry")
-}
-
-// NextEntry tries to get the consecutive entry ID
-func NextEntry(entryID string) string {
-	entryNumber, err := strconv.Atoi(entryID)
-	if err != nil {
-		log.Printf("Entry ID: %v could not be converted to a number.\n", entryID)
-		return entryID
-	}
-
-	return strconv.Itoa(entryNumber + 1)
-}
-
-// PreviousEntry tries to get the previous entry ID
-func PreviousEntry(entryID string) string {
-	// Convert entryID to an integer
-	entryNumber, err := strconv.Atoi(entryID)
-	if err != nil {
-		log.Printf("Entry ID: %v could not be converted to a number.\n", entryID)
-		return entryID
-	}
-
-	entryNumber--
-	// Can't move beyond first entry
-	if entryNumber < 0 {
-		return entryID
-	}
-
-	return strconv.Itoa(entryNumber)
 }
