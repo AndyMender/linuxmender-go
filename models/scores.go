@@ -44,7 +44,7 @@ func (mgr *ScoreManager) GetSession(sessionID string) (string, bool) {
 
 // WasLikedBy checks whether a blog entry was liked by a specific user
 func (mgr *ScoreManager) WasLikedBy(sessionID string, entryID int) bool {
-	_, err := mgr.Conn.Exists(
+	key, err := mgr.Conn.Exists(
 		fmt.Sprintf(
 			"%v:%v:likedby:%v", 
 			paths.PostsRedisPath, 
@@ -59,7 +59,8 @@ func (mgr *ScoreManager) WasLikedBy(sessionID string, entryID int) bool {
 		return false
 	}
 
-	return true
+	// 1 - exists, 0 - doesn't exist
+	return key == 1
 }
 
 // SetLikedBy attaches a user session ID to a blog entry key
