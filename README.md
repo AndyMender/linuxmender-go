@@ -11,7 +11,7 @@ Introduction
 **Back-end:**  
     - MVC via [beego](https://github.com/astaxie/beego)  
     - Static data definitions via [sqlite3](https://sqlite.org/index.html)  
-    - Dynamic data definitions via [redis](https://redis.io/) 
+    - Dynamic data definitions via [redis](https://redis.io/)  
 **Web serving (WIP):**  
     - reverse-proxy & load-balancing via [caddy](https://caddyserver.com/)  
 **Deployment (WIP):**  
