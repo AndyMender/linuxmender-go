@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/go-redis/redis"
 	"fmt"
+	"strconv"
 	"encoding/json"
 )
 
@@ -14,7 +15,12 @@ type ScoreController struct {
 }
 
 // LikeEntry adds +1 "like" to the score for a given blog entry
+// @router /posts/:entryid/endorse
 func (ctrl *ScoreController) LikeEntry() {
+	// Get entry ID for current entry
+	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
+
+	fmt.Printf("Endorsed post with ID: %v\n", entryID)
 	var requestBody map[string]interface{}
 
 	// Get entry ID and fetch matching entry details

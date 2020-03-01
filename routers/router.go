@@ -46,5 +46,5 @@ func init() {
 	beego.Router("/posts/:entryid:int", mainController, "get:GetEntry")
 	beego.Router("/posts/:entryid:int/next", mainController, "get:GetEntryNext")
 	beego.Router("/posts/:entryid:int/previous", mainController, "get:GetEntryPrevious")
-	beego.Router("/api/endorse", auxController, "post:LikeEntry")
+	beego.Router("/posts/:entryid:int/endorse", auxController, "post:LikeEntry")
 }
