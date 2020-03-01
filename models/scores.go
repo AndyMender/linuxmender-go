@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -41,7 +42,7 @@ func (mgr *ScoreManager) GetSession(uuidString string) (string, bool) {
 	return sessionTime, true
 }
 
-// LikeEntry bumps the "like" score for a blog entry key
+// LikeEntry bumps the "likes" score for a blog entry key
 func (mgr *ScoreManager) LikeEntry(sessionID string, entryID int) {
 	// Get + set user session to avoid superfluous counts
 	if _, ok := mgr.GetSession(sessionID); ok {
@@ -52,4 +53,23 @@ func (mgr *ScoreManager) LikeEntry(sessionID string, entryID int) {
 	mgr.Conn.Incr(
 		fmt.Sprintf("%v:%v:likes", paths.PostsRedisPath, entryID),
 	)
+}
+
+// GetLikes returns the "likes" score for a blog entry key
+func (mgr *ScoreManager) GetLikes(entryID int) int {
+	// Get raw score
+	scoreRaw, err := mgr.Conn.Get(
+		fmt.Sprintf("%v:%v:likes", paths.PostsRedisPath, entryID),
+	).Result()
+	if err == redis.Nil {
+		return 0
+	} else if err != nil {
+		log.Println(err)
+		return 0
+	}
+
+	// Convert score to a number
+	scoreNum, _ := strconv.Atoi(scoreRaw)
+
+	return scoreNum
 }
