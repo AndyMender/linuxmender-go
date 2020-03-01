@@ -120,17 +120,14 @@
       const button = document.getElementById("like-button");
 
       button.addEventListener("click", function() {
-        if (!sessionStorage.likeClicked) {
-          fetch("/api/endorse/{{.EntryID}}", {
-            headers: {
-              "Accept": "application/json",
-              "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: "{}"
-          });
-          sessionStorage.likeClicked = true;
-        }
+        fetch("/api/endorse/{{.EntryID}}", {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: "{}"
+        });
       });
     </script>
     <script type="text/javascript">
