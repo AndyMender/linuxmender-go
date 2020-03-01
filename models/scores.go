@@ -10,6 +10,8 @@ import (
 	"linuxmender/paths"
 )
 
+var sessionTTL, _ = time.ParseDuration("24h")
+
 // ScoreManager is responsible for setting/getting metrics in Redis
 type ScoreManager struct {
 	Conn *redis.Client
@@ -20,7 +22,7 @@ func (mgr *ScoreManager) SetSession(uuidString string) {
 	mgr.Conn.Set(
 		fmt.Sprintf("%v:%v", paths.SessionsRedisPath, uuidString), 
 		time.Now().Format(time.RFC3339),
-		24 * 60 * 60, // 24 hours
+		sessionTTL, // 24 hours
 	)
 }
 
