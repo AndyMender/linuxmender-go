@@ -42,7 +42,7 @@ func (ctrl *RouteController) GetEntry() {
 	// ctrl.LayoutSections = make(map[string]string)
 
 	// Get entry ID and fetch matching entry details
-	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entry"))
+	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
 
 	entry, ok := ctrl.EntryRecords[entryID]
 
