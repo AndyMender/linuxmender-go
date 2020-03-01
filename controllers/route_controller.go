@@ -89,17 +89,3 @@ func (ctrl *RouteController) GetEntryPrevious() {
 
 	ctrl.Redirect(fmt.Sprintf("/posts/%v", previousEntryID), 307)
 }
-
-// Error404 generates route details for the 404 response page
-func (ctrl *RouteController) Error404() {
-	// Load main HTML text block into LayoutContent field
-	ctrl.TplName = "pages/notfound.html"
-
-	// Populate remaining fields
-	ctrl.Data["Title"] = "Lands of Unix"
-	ctrl.Data["EntryTitle"] = "Whoopsies!"
-	ctrl.Data["DatePosted"] = ""
-	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
-	ctrl.Data["EntryID"] = "notfound"
-	ctrl.Data["ValidEntry"] = false
-}

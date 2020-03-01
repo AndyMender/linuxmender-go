@@ -39,7 +39,7 @@ func init() {
 	}
 
 	// Register controller for error handling
-	beego.ErrorController(mainController)
+	beego.ErrorController(&controllers.ErrorController{})
 
 	// Attach controller callback object to URL paths
 	beego.Router("/", mainController, "get:GetIndex")
