@@ -33,4 +33,3 @@ services:
 configs:
   redis_config:
     file: /usr/local/share/redis/redis.conf
-
