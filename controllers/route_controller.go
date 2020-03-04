@@ -21,7 +21,7 @@ func (ctrl *RouteController) Prepare() {
 	ctrl.Layout = "template/layout.html"
 }
 
-// GetIndex generates route details for the default index page
+// GetIndex handles the root route (the index)
 // @router /
 func (ctrl *RouteController) GetIndex() {
 	// Load main HTML text block into LayoutContent field
@@ -36,7 +36,7 @@ func (ctrl *RouteController) GetIndex() {
 	ctrl.Data["ValidEntry"] = false
 }
 
-// GetEntry generates route details for blog entry pages
+// GetEntry handles routes for individual blog entry pages
 // @router /posts/:entryid
 func (ctrl *RouteController) GetEntry() {
 	// Get entry ID and fetch matching entry details
@@ -61,7 +61,7 @@ func (ctrl *RouteController) GetEntry() {
 	ctrl.Data["ValidEntry"] = true
 }
 
-// GetEntryNext generates entry details for the "next" entry in order
+// GetEntryNext redirects to the subsequent blog entry page
 // @router /posts/:entryid/next
 func (ctrl *RouteController) GetEntryNext() {
 	// Get entry ID for current entry
@@ -76,7 +76,7 @@ func (ctrl *RouteController) GetEntryNext() {
 	ctrl.Redirect(fmt.Sprintf("/posts/%v", nextEntryID), 307)
 }
 
-// GetEntryPrevious generates entry details for the "previous" entry in order
+// GetEntryPrevious redirects to the previous blog entry page
 // @router /posts/:entryid/previous
 func (ctrl *RouteController) GetEntryPrevious() {
 	// Get entry ID for current entry

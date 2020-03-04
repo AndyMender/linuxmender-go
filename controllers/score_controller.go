@@ -38,7 +38,7 @@ func (ctrl *ScoreController) LikeEntry() {
 }
 
 // GetLikes fetches the "likes" score for a blog entry from the back-end
-// @router /api/likes:entryid
+// @router /api/likes/:entryid
 func (ctrl *ScoreController) GetLikes() {
 	// Get entryID for current entry
 	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
