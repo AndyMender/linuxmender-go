@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// TimeFormat is the IS07660/RFC3339 date string template
 const TimeFormat = "2006-01-02"
 
 // IsoToTime converts an ISO7660 time string into a Time struct
