@@ -12,7 +12,8 @@ import (
 // RouteController is the main endpoint controller
 type RouteController struct {
 	beego.Controller
-	EntryRecords map[int]*models.Entry
+	Mgr *models.EntryManager
+	EntryRecords map[int][]*models.Entry
 }
 
 // Prepare performs an initial setup before running any other method
@@ -42,10 +43,10 @@ func (ctrl *RouteController) GetEntry() {
 	// Get entry ID and fetch matching entry details
 	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
 
-	entry, ok := ctrl.EntryRecords[entryID]
+	entry := ctrl.Mgr.GetOne(entryID)
 
 	// Abort if the blog entry doesn't exist
-	if !ok {
+	if entry == nil {
 		ctrl.Abort("404")
 	}
 
@@ -69,7 +70,7 @@ func (ctrl *RouteController) GetEntryNext() {
 
 	// Repeat current entry or redirect to next if available
 	nextEntryID := entryID + 1
-	if _, ok := ctrl.EntryRecords[nextEntryID]; !ok {
+	if entry := ctrl.Mgr.GetOne(nextEntryID); entry == nil {
 		ctrl.Redirect(fmt.Sprintf("/posts/%v", entryID), 307)
 	}
 
@@ -84,7 +85,7 @@ func (ctrl *RouteController) GetEntryPrevious() {
 
 	// Repeat current entry or redirect to previous if available
 	previousEntryID := entryID - 1
-	if _, ok := ctrl.EntryRecords[previousEntryID]; !ok {
+	if entry := ctrl.Mgr.GetOne(previousEntryID); entry == nil {
 		ctrl.Redirect(fmt.Sprintf("/posts/%v", entryID), 307)
 	}
 

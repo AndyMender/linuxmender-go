@@ -19,7 +19,7 @@ func init() {
 	if err != nil {
 		log.Println(err)
 	}
-	defer db.Close()
+	defer db.Close()	// TODO: remove to avoid premature db release?
 
 	// Initialize managers
 	entryManager := &models.EntryManager{
@@ -40,7 +40,8 @@ func init() {
 
 	// Create central route controller object
 	mainController := &controllers.RouteController{
-		EntryRecords: entryManager.GetAll(),
+		Mgr: entryManager,
+		EntryRecords: models.EntriesByYear(entryManager.GetAll()),
 	}
 
 	// Register controller for error handling
