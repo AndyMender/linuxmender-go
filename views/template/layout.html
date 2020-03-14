@@ -86,19 +86,21 @@
       <div class="col s3">
         <h1 class="header"></h1>
         <ul class="collapsible">
-          <li>
-            <div class="collapsible-header red-text text-accent-1">
-              <i class="material-icons right big">keyboard_arrow_down</i>
-              Other Entries
-            </div>
-            <div class="collapsible-body">
-              <div class="collection">
-                {{range $entryID, $entry := .BlogEntries}}
-                <a href="/posts/{{$entryID}}" class="collection-item">{{$entry.ID}} - {{$entry.Title}}</a>
-                {{end}}
+          {{range $year, $entryRecords := .BlogEntries}}
+            <li>
+              <div class="collapsible-header red-text text-accent-1">
+                <i class="material-icons right big">keyboard_arrow_down</i>
+                {{$year}}
               </div>
-            </div>
-          </li>
+              <div class="collapsible-body">
+                <div class="collection">
+                  {{range $_, $entry := $entryRecords}}
+                  <a href="/posts/{{$entry.ID}}" class="collection-item">{{$entry.Title}}</a>
+                  {{end}}
+                </div>
+              </div>
+            </li>
+          {{end}}
         </ul>
      </div>
 
