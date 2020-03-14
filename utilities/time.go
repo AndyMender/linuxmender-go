@@ -6,12 +6,12 @@ import (
 	"time"
 )
 
-var timeFormat = "2006-01-02"
+const var TimeFormat = "2006-01-02"
 
 // IsoToTime converts an ISO7660 time string into a Time struct
 func IsoToTime(timeString String) time.Time {
 	// Load date string into Time object
-	parsedTime, err := time.Parse(timeFormat, timeString)
+	parsedTime, err := time.Parse(TimeFormat, timeString)
 	if err != nil {
 		log.Printf("Couldn't properly parse date string %v. Using Epoch time.\n", timeString)
 		return time.Unix(0, 0)
