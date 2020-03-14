@@ -7,6 +7,7 @@ import (
 	"github.com/astaxie/beego"
 
 	"linuxmender/models"
+	"linuxmender/utilities"
 )
 
 // RouteController is the main endpoint controller
@@ -31,7 +32,7 @@ func (ctrl *RouteController) GetIndex() {
 	// Populate remaining fields
 	ctrl.Data["Title"] = "Lands of Unix"
 	ctrl.Data["EntryTitle"] = "Welcome!"
-	ctrl.Data["DatePosted"] = "February 1st, 2020"
+	ctrl.Data["DatePosted"] = utilities.HumanizeTime(utilities.IsoToTime("2020-02-01"))
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 	ctrl.Data["EntryID"] = ""
 	ctrl.Data["ValidEntry"] = false
@@ -56,7 +57,7 @@ func (ctrl *RouteController) GetEntry() {
 	// Populate remaining fields
 	ctrl.Data["Title"] = entry.Title
 	ctrl.Data["EntryTitle"] = entry.Title
-	ctrl.Data["DatePosted"] = entry.DatePosted
+	ctrl.Data["DatePosted"] = utilities.HumanizeTime(entry.DatePosted)
 	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
 	ctrl.Data["EntryID"] = entry.ID
 	ctrl.Data["ValidEntry"] = true
