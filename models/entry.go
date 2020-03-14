@@ -2,19 +2,19 @@ package models
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
-	"time"
 	"strings"
-)
+	"time"
 
-const dateFormat = "06-01-02"
+	"linuxmender/utilities"
+)
 
 // Entry is a definition for blog Entry objects
 type Entry struct {
-	ID                int
-	Title, DatePosted string
-	Tags              []string
+	ID			int
+	Title		string
+	DatePosted	time.Time
+	Tags		[]string
 }
 
 // EntryManager is a SQL-based manager for Entry records
@@ -58,7 +58,7 @@ func (mgr *EntryManager) InsertOne(entry *Entry) {
 	_, err = readyStatement.Exec(
 		entry.ID, 
 		entry.Title, 
-		entry.DatePosted, 
+		entry.DatePosted.Format(utilities.TimeFormat), 
 		strings.Join(entry.Tags, ","),
 	)
 	if err != nil {
@@ -84,7 +84,7 @@ func (mgr *EntryManager) InsertMany(entries map[string]*Entry) {
 		_, err = readyStatement.Exec(
 			entry.ID, 
 			entry.Title, 
-			entry.DatePosted, 
+			entry.DatePosted.Format(TimeFormat), 
 			strings.Join(entry.Tags, ","),
 		)
 		if err != nil {
@@ -117,7 +117,7 @@ func (mgr *EntryManager) GetOne(entryID int) *Entry {
 	return &Entry{
 		ID:         entryID,
 		Title:      title,
-		DatePosted: datePosted,
+		DatePosted: utilities.IsoToTime(datePosted),
 		Tags:       strings.Split(tagsText, ","),
 	}
 }
@@ -151,40 +151,10 @@ func (mgr *EntryManager) GetAll() map[int]*Entry {
 		entryRecords[entryID] = &Entry{
 			ID:         entryID,
 			Title:      title,
-			DatePosted: parseDate(datePosted),
+			DatePosted: utilities.IsoToTime(datePosted),
 			Tags:       strings.Split(tagsText, ","),
 		}
 	}
 
 	return entryRecords
-}
-
-func parseDate(timeString string) string {
-	// Load date string into Time object
-	parsedTime, err := time.Parse("2006-01-02", timeString)
-	if err != nil {
-		log.Printf("Couldn't properly parse date string %v. Returning as is.\n", timeString)
-		return timeString
-	}
-
-	// Decide on the day of month string ending 
-	dayEnding := ""
-	switch (parsedTime.Day() % 10) {
-	case 1:
-		dayEnding = "st"
-	case 2:
-		dayEnding = "nd"
-	case 3:
-		dayEnding = "rd"
-	default:
-		dayEnding = "th"
-	}
-
-	return fmt.Sprintf(
-		"%s %d%s, %d", 
-		parsedTime.Month(), 
-		parsedTime.Day(), 
-		dayEnding, 
-		parsedTime.Year(),
-	)
 }
