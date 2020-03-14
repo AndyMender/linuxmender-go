@@ -20,14 +20,11 @@ func IsoToTime(timeString string) time.Time {
 	return parsedTime
 }
 
-// ParseDate converts an ISO8660 time string into a human-readable format
-func ParseDate(timeString string) string {
-	// Load date string into Time object
-	parsedTime := IsoToTime(timeString)
-
+// HumanizeTime converts a time.Time struct into a human-readable string
+func HumanizeTime(t time.Time) string {
 	// Decide on the day of month string ending 
 	dayEnding := ""
-	switch (parsedTime.Day() % 10) {
+	switch (t.Day() % 10) {
 	case 1:
 		dayEnding = "st"
 	case 2:
@@ -40,9 +37,9 @@ func ParseDate(timeString string) string {
 
 	return fmt.Sprintf(
 		"%s %d%s, %d", 
-		parsedTime.Month(), 
-		parsedTime.Day(), 
+		t.Month(), 
+		t.Day(), 
 		dayEnding, 
-		parsedTime.Year(),
+		t.Year(),
 	)
 }
