@@ -1,10 +1,10 @@
 package models
 
 import (
-	"database/sql"
 	"log"
 	"strings"
 	"time"
+	"database/sql"
 
 	"linuxmender/utilities"
 )
@@ -84,7 +84,7 @@ func (mgr *EntryManager) InsertMany(entries map[string]*Entry) {
 		_, err = readyStatement.Exec(
 			entry.ID, 
 			entry.Title, 
-			entry.DatePosted.Format(TimeFormat), 
+			entry.DatePosted.Format(utilities.TimeFormat), 
 			strings.Join(entry.Tags, ","),
 		)
 		if err != nil {
@@ -157,4 +157,18 @@ func (mgr *EntryManager) GetAll() map[int]*Entry {
 	}
 
 	return entryRecords
+}
+
+// EntriesByYear re-organizes a map of Entries to group them by year
+func EntriesByYear(entryRecords map[int]*Entry) map[int][]*Entry {
+	var year int
+	var recordsByYear map[int][]*Entry = make(map[int][]*Entry)
+
+	for _, entry := range entryRecords {
+		year = entry.DatePosted.Year()
+
+		recordsByYear[year] = append(recordsByYear[year], entry)
+	}
+
+	return recordsByYear
 }
