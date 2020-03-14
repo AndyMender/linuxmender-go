@@ -1,12 +1,8 @@
 package routers
 
 import (
-	"database/sql"
-	"log"
-
 	"github.com/astaxie/beego"
 	"github.com/go-redis/redis"
-	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
 
 	"linuxmender/controllers"
 	"linuxmender/models"
@@ -14,16 +10,9 @@ import (
 )
 
 func init() {
-	// Open database with static data
-	db, err := sql.Open("sqlite3", paths.EntriesDBPath)
-	if err != nil {
-		log.Println(err)
-	}
-	defer db.Close()	// TODO: remove to avoid premature db release?
-
 	// Initialize managers
 	entryManager := &models.EntryManager{
-		DB: db,
+		DBName: paths.EntriesDBPath,
 	}
 	scoreManager := &models.ScoreManager{
 		Conn: redis.NewClient(&redis.Options{

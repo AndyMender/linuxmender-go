@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
 
 	"linuxmender/utilities"
 )
@@ -19,11 +20,17 @@ type Entry struct {
 
 // EntryManager is a SQL-based manager for Entry records
 type EntryManager struct {
-	DB	*sql.DB
+	DBName string
 }
 
 // CreateTable creates an SQL table for storing blog entries
 func (mgr *EntryManager) CreateTable() error {
+	db, err := sql.Open("sqlite3", mgr.DBName)
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.Close()
+
 	sqlQuery := `
 		CREATE TABLE IF NOT EXISTS entries (
       		id INTEGER NOT NULL PRIMARY KEY,
@@ -33,7 +40,7 @@ func (mgr *EntryManager) CreateTable() error {
 		);
 	`
 
-	_, err := mgr.DB.Exec(sqlQuery)
+	_, err = db.Exec(sqlQuery)
 	if err != nil {
 		log.Printf("%q: %s\n", err, sqlQuery)
 		return err
@@ -44,10 +51,19 @@ func (mgr *EntryManager) CreateTable() error {
 
 // InsertOne inserts a single Entry record into a SQL table
 func (mgr *EntryManager) InsertOne(entry *Entry) {
-	sqlQuery := "INSERT INTO entries (id, title, date_posted, tags) VALUES (?, ?, ?, ?)"
+	db, err := sql.Open("sqlite3", mgr.DBName)
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.Close()
+
+	sqlQuery := `
+		INSERT INTO entries (id, title, date_posted, tags) 
+		VALUES (?, ?, ?, ?)
+	`
 
 	// Create a "prepared" SQL statement context
-	readyStatement, err := mgr.DB.Prepare(sqlQuery)
+	readyStatement, err := db.Prepare(sqlQuery)
 	if err != nil {
 		log.Println(err)
 		return
@@ -64,15 +80,23 @@ func (mgr *EntryManager) InsertOne(entry *Entry) {
 	if err != nil {
 		log.Println(err)
 	}
-
 }
 
 // InsertMany is analogous to InsertOne, but accepts a map of Entry records
 func (mgr *EntryManager) InsertMany(entries map[string]*Entry) {
-	sqlQuery := "INSERT INTO entries (id, title, date_posted, tags) VALUES (?, ?, ?, ?)"
+	db, err := sql.Open("sqlite3", mgr.DBName)
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.Close()
+
+	sqlQuery := `
+		INSERT INTO entries (id, title, date_posted, tags) 
+		VALUES (?, ?, ?, ?)
+	`
 
 	// Create a "prepared" SQL statement context
-	readyStatement, err := mgr.DB.Prepare(sqlQuery)
+	readyStatement, err := db.Prepare(sqlQuery)
 	if err != nil {
 		log.Println(err)
 		return
@@ -96,9 +120,20 @@ func (mgr *EntryManager) InsertMany(entries map[string]*Entry) {
 
 // GetOne returns a single Entry record from a SQL table
 func (mgr *EntryManager) GetOne(entryID int) *Entry {
+	db, err := sql.Open("sqlite3", mgr.DBName)
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.Close()
+
+	sqlQuery := `
+		SELECT title, date_posted, tags 
+		FROM entries 
+		WHERE id = ?
+	`
+
 	// Create a "prepared" SQL statement context
-	sqlQuery := "SELECT title, date_posted, tags FROM entries WHERE id = ?"
-	readyStatement, err := mgr.DB.Prepare(sqlQuery)
+	readyStatement, err := db.Prepare(sqlQuery)
 	if err != nil {
 		log.Println(err)
 		return nil
@@ -126,9 +161,15 @@ func (mgr *EntryManager) GetOne(entryID int) *Entry {
 func (mgr *EntryManager) GetAll() map[int]*Entry {
 	entryRecords := make(map[int]*Entry)
 
+	db, err := sql.Open("sqlite3", mgr.DBName)
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.Close()
+
 	// Generate a Rows iterator from a SQL query
 	sqlQuery := "SELECT id, title, date_posted, tags FROM entries"
-	rows, err := mgr.DB.Query(sqlQuery)
+	rows, err := db.Query(sqlQuery)
 	if err != nil {
 		log.Println(err)
 		return nil
