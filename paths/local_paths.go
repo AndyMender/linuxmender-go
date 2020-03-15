@@ -14,5 +14,5 @@ var ViewsPath = filepath.Join(ProjectPath, "views")
 // EntriesPath points to the JSON containing blog entry definitions
 var EntriesPath = filepath.Join(StaticPath, "entries.json")
 
-// EntriesDBPath points to the SQLite3 database containing blog entry definitions
-var EntriesDBPath = filepath.Join(StaticPath, "entries.sqlite3")
+// DBPath points to the SQLite3 database containing static Web page definitions
+var DBPath = filepath.Join(StaticPath, "db.sqlite3")
