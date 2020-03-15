@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"time"
 
 	"github.com/astaxie/beego"
 
@@ -21,11 +22,16 @@ func (ctrl *CommentController) SubmitComment() {
 	// Get entry ID for current entry
 	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
 
+	// Build Comment struct
 	comment := &models.Comment{}
 	if err := ctrl.ParseForm(comment); err != nil {
 		log.Println(err)
 		ctrl.ServeJSON()
 	}
+
+	// Attach missing fields
+	comment.EntryID = entryID
+	comment.TimePosted = time.Now()
 
 	fmt.Println(*comment)
 
