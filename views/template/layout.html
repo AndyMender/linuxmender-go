@@ -67,9 +67,39 @@
         <!--Content from blog entries-->
         {{.LayoutContent}}
 
+        <!--TODO: Make "Comments" area reactive-->
+        {{if .ValidEntry}}
+          <form action="/api/comments/{{.EntryID}}" method="post">
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input placeholder="Bigus Digus" id="first_name" name="name" type="text" class="validate">
+                <label for="first_name">Name</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="material-icons prefix">email</i>
+                <input placeholder="donkydoodle@pigsty.com" id="email" name="email" type="email" class="validate">
+                <label for="email">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">comment</i>
+                <textarea placeholder="I like this post, because..." id="comment_text" name="comment" class="materialize-textarea" data-length="200"></textarea>
+                <label for="comment_text">Comment</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col">
+                <button class="waves-effect waves-light btn" type="submit">Submit</button>
+              </div>
+            </div>
+          </form>
+        {{end}}
+
         <!--Back and Next buttons-->
         {{if .ValidEntry}}
-        <div class="center-align">
+        <div class="row center-align">
           <a href="/posts/{{.EntryID}}/previous" class="btn waves-effect waves-light" type="submit" name="action">
             Back
             <i class="material-icons right">fast_rewind</i>
@@ -102,9 +132,7 @@
             </li>
           {{end}}
         </ul>
-     </div>
-
-      <!--TODO: Comments area?-->
+      </div>
     </div>
 
     <!--Compiled and minified JavaScript-->
