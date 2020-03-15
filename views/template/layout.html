@@ -67,15 +67,17 @@
         {{.LayoutContent}}
 
         <!--TODO: Add available comments-->
-        <ul class="collection">
-          <li class="collection-item">
-            <span class="title"><b>Timothy wrote...</b></span>
-            <p>
-              I like this! :)
-            </p>
-            <p><em>March 15th 2020 10:25pm</em></p>
-          </li>
-        </ul>
+        {{if .ValidEntry}}
+          <ul class="collection">
+            <li class="collection-item">
+              <span class="title"><b>Timothy wrote...</b></span>
+              <p>
+                I like this! :)
+              </p>
+              <p><em>March 15th 2020 10:25pm</em></p>
+            </li>
+          </ul>
+        {{end}}
 
         <!--TODO: Make "Comments" area reactive-->
         {{if .ValidEntry}}
