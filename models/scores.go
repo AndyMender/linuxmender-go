@@ -118,7 +118,7 @@ func (mgr *ScoreManager) GetLikes(entryID int) int {
 func (mgr *ScoreManager) AddVisit() {
 	// Increment daily counter
 	mgr.Conn.Incr(
-		fmt.Sprintf("%v:%v", paths.VisitorsRedisPath, time.Now().Format(utilities.TimeFormat)),
+		fmt.Sprintf("%v:%v", paths.VisitorsRedisPath, time.Now().Format(utilities.DateFormat)),
 	)
 
 	// Increment global counter

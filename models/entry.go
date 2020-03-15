@@ -74,7 +74,7 @@ func (mgr *EntryManager) InsertOne(entry *Entry) {
 	_, err = readyStatement.Exec(
 		entry.ID, 
 		entry.Title, 
-		entry.DatePosted.Format(utilities.TimeFormat), 
+		entry.DatePosted.Format(utilities.DateFormat), 
 		strings.Join(entry.Tags, ","),
 	)
 	if err != nil {
@@ -108,7 +108,7 @@ func (mgr *EntryManager) InsertMany(entries map[string]*Entry) {
 		_, err = readyStatement.Exec(
 			entry.ID, 
 			entry.Title, 
-			entry.DatePosted.Format(utilities.TimeFormat), 
+			entry.DatePosted.Format(utilities.DateFormat), 
 			strings.Join(entry.Tags, ","),
 		)
 		if err != nil {

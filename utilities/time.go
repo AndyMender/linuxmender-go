@@ -6,13 +6,13 @@ import (
 	"time"
 )
 
-// TimeFormat is the IS07660/RFC3339 date string template
-const TimeFormat = "2006-01-02"
+// DateFormat is the IS07660/RFC3339 date string template
+const DateFormat = "2006-01-02"
 
 // IsoToTime converts an ISO7660 time string into a Time struct
 func IsoToTime(timeString string) time.Time {
 	// Load date string into Time object
-	parsedTime, err := time.Parse(TimeFormat, timeString)
+	parsedTime, err := time.Parse(DateFormat, timeString)
 	if err != nil {
 		log.Printf("Couldn't properly parse date string %v. Using Epoch time.\n", timeString)
 		return time.Unix(0, 0)
