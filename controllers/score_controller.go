@@ -52,3 +52,23 @@ func (ctrl *ScoreController) GetLikes() {
 
 	ctrl.ServeJSON()
 }
+
+// AddVisit increments the visitor/hit counter for the website
+// @router /api/visits POST
+func (ctrl *ScoreController) AddVisit() {
+	ctrl.Mgr.AddVisit()
+
+	ctrl.ServeJSON()
+}
+
+// GetVisits fetches the "visitors" counter for the website from the back-end
+// @router /api/visits GET
+func (ctrl *ScoreController) GetVisits() {
+	score := ctrl.Mgr.GetVisits()
+
+	ctrl.Data["json"] = map[string]interface{}{
+		"visits": score,
+	}
+
+	ctrl.ServeJSON()
+}

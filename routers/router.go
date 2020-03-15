@@ -44,4 +44,6 @@ func init() {
 
 	beego.Router("/api/endorse/:entryid:int", auxController, "post:LikeEntry")
 	beego.Router("/api/likes/:entryid:int", auxController, "get:GetLikes")
+	beego.Router("/api/visits", auxController, "get:GetVisits")
+	beego.Router("/api/visits", auxController, "post:AddVisit")
 }
