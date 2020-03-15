@@ -19,7 +19,7 @@
     <title>{{.Title}}</title>
   </head>
 
-  <body>
+  <body onload="incrVisitors()">
     <div class="navbar-fixed">
       <nav class="nav-extended">
         <div class="nav-wrapper">
@@ -28,7 +28,7 @@
           <!--Info icons and links-->
           <ul class="right hide-on-med-and-down">
             <!--TODO: Global visitor counter-->
-            <li><a><span class="new badge blue" data-badge-caption="visitors">0</span></a></li>
+            <li><a><span class="new badge blue" data-badge-caption="visitors" id="hit-counter"></span></a></li>
             <li><a href="https://github.com/AndyMender"><i class="material-icons left">public</i>GitHub</a></li>
             <li><a href="https://at.linkedin.com/in/andrzej-bylicki"><i class="material-icons left">people_alt</i>LinkedIn</a></li>
             <li><a href="mailto:andymenderunix@gmail.com"><i class="material-icons left">mail</i>Email Me!</a></li>
@@ -111,6 +111,7 @@
     <script type="text/javascript" src="/static/js/materialize.min.js"></script>
 
     <!--DOM triggers-->
+    <!--Toggle for all "collapsible" elements-->
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.collapsible');
@@ -118,6 +119,8 @@
         var instances = M.Collapsible.init(elems, options);
       });
     </script>
+
+    <!--POST request handlers for "like" button-->
     <script type="text/javascript">
       const button = document.getElementById("like-button");
 
@@ -132,6 +135,8 @@
         });
       });
     </script>
+
+    <!--GET request handler for "likes" counter-->
     <script type="text/javascript">
       fetch("/api/likes/{{.EntryID}}", {
         headers: {
@@ -143,6 +148,35 @@
       .then(function(response) { return response.json(); })
       .then(function(json) {
         document.getElementById("like-score").innerHTML = json.likes + " likes";
+      });
+    </script>
+
+    <!--POST request handler for "visitors" counter-->
+    <script type="text/javascript">
+      function incrVisitors() {
+        fetch("/api/visits", {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: "{}"
+        });
+      }
+    </script>
+
+    <!--GET request handler for "visitors" counter-->
+    <script type="text/javascript">
+      fetch("/api/visits", {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "GET"
+      })
+      .then(function(response) { return response.json(); })
+      .then(function(json) {
+        document.getElementById("hit-counter").innerHTML = json.visits;
       });
     </script>
   </body>
