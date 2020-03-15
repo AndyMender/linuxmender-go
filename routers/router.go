@@ -27,6 +27,8 @@ func init() {
 		Mgr: scoreManager,
 	}
 
+	commentController := &controllers.CommentController{}
+
 	// Create central route controller object
 	mainController := &controllers.RouteController{
 		Mgr: entryManager,
@@ -46,4 +48,6 @@ func init() {
 	beego.Router("/api/likes/:entryid:int", auxController, "get:GetLikes")
 	beego.Router("/api/visits", auxController, "get:GetVisits")
 	beego.Router("/api/visits", auxController, "post:AddVisit")
+
+	beego.Router("/api/comments:entryid:int", commentController, "post:SubmitComment")
 }
