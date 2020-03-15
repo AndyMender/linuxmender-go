@@ -6,8 +6,11 @@ import (
 	"time"
 )
 
-// DateFormat is the IS07660/RFC3339 date string template
+// DateFormat is a IS07660/RFC3339 date string template
 const DateFormat = "2006-01-02"
+
+// TimeFormat is a ISO7660/RFC3339 datetime string template
+const TimeFormat = "2006-01-02 03:04:05"
 
 // IsoToTime converts an ISO7660 time string into a Time struct
 func IsoToTime(timeString string) time.Time {
