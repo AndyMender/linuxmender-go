@@ -59,7 +59,7 @@
 
         <!--TODO: make "like" button responsive-->
         <a class="waves-effect waves-light btn" id="like-score"></a>
-        <a class="waves-effect waves-light btn" id="like-button"><i class="material-icons">thumb_up_alt</i></a>
+        <a class="waves-effect waves-light btn" onclick="likeEntry()"><i class="material-icons">thumb_up_alt</i></a>
         {{end}}
 
         <p><em>Posted on {{.DatePosted}}</em></p>
@@ -122,9 +122,7 @@
 
     <!--POST request handlers for "like" button-->
     <script type="text/javascript">
-      const button = document.getElementById("like-button");
-
-      button.addEventListener("click", function() {
+      function likeEntry() {
         fetch("/api/endorse/{{.EntryID}}", {
           headers: {
             "Accept": "application/json",
@@ -133,7 +131,7 @@
           method: "POST",
           body: "{}"
         });
-      });
+      }
     </script>
 
     <!--GET request handler for "likes" counter-->
