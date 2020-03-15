@@ -128,7 +128,7 @@ func (mgr *ScoreManager) AddVisit() {
 }
 
 // GetVisits gets the value of the global visitor/hit counter
-func (mgr *ScoreManager) GetVisits() {
+func (mgr *ScoreManager) GetVisits() int {
 	// Get raw counter
 	counterRaw, err := mgr.Conn.Get(
 		fmt.Sprintf("%v:all", paths.VisitorsRedisPath),
@@ -141,7 +141,7 @@ func (mgr *ScoreManager) GetVisits() {
 	}
 
 	// Convert counter to a number
-	counterNum, err := strconv.Atoi(scoreRaw)
+	counterNum, err := strconv.Atoi(counterRaw)
 	if err != nil {
 		log.Println(err)
 		return 0
