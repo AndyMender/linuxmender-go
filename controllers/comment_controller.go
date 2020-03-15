@@ -14,6 +14,7 @@ import (
 // CommentController is the main endpoint controller
 type CommentController struct {
 	beego.Controller
+	Mgr *models.CommentManager
 }
 
 // SubmitComment handles POST requests with comment data

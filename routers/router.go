@@ -12,7 +12,7 @@ import (
 func init() {
 	// Initialize managers
 	entryManager := &models.EntryManager{
-		DBName: paths.EntriesDBPath,
+		DBName: paths.DBPath,
 	}
 	scoreManager := &models.ScoreManager{
 		Conn: redis.NewClient(&redis.Options{
@@ -21,13 +21,18 @@ func init() {
 			DB:       1,  // use default DB
 		}),
 	}
+	commentManager := &models.CommentManager{
+		DBName: paths.DBPath,
+	}
 
 	// Create auxilliary score controller object
 	auxController := &controllers.ScoreController{
 		Mgr: scoreManager,
 	}
 
-	commentController := &controllers.CommentController{}
+	commentController := &controllers.CommentController{
+		Mgr: commentManager,
+	}
 
 	// Create central route controller object
 	mainController := &controllers.RouteController{
