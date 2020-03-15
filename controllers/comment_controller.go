@@ -34,7 +34,7 @@ func (ctrl *CommentController) SubmitComment() {
 	comment.EntryID = entryID
 	comment.TimePosted = time.Now()
 
-	fmt.Println(*comment)
+	ctrl.Mgr.InsertOne(comment)
 
 	ctrl.Redirect(fmt.Sprintf("/posts/%v", entryID), 303)
 }
