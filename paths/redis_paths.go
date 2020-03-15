@@ -8,3 +8,6 @@ var SessionsRedisPath = ProjectRedisPath + ":sessions"
 
 // PostsRedisPath is the sub-path for blog entry data
 var PostsRedisPath = ProjectRedisPath + ":posts"
+
+// VisitorsRedisPath is the sub-path for the visitor/hit counter
+var VisitorsRedisPath = ProjectRedisPath + ":visitors"

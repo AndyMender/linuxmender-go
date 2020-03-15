@@ -9,6 +9,7 @@ import (
 	"github.com/go-redis/redis"
 
 	"linuxmender/paths"
+	"linuxmender/utilities"
 )
 
 var sessionTTL, _ = time.ParseDuration("24h")
@@ -104,7 +105,47 @@ func (mgr *ScoreManager) GetLikes(entryID int) int {
 	}
 
 	// Convert score to a number
-	scoreNum, _ := strconv.Atoi(scoreRaw)
+	scoreNum, err := strconv.Atoi(scoreRaw)
+	if err != nil {
+		log.Println(err)
+		return 0
+	}
 
 	return scoreNum
+}
+
+// AddVisit increments the global visitor/hit counter and the daily counter
+func (mgr *ScoreManager) AddVisit() {
+	// Increment daily counter
+	mgr.Conn.Incr(
+		fmt.Sprintf("%v:%v", paths.VisitorsRedisPath, time.Now().Format(utilities.TimeFormat)),
+	)
+
+	// Increment global counter
+	mgr.Conn.Incr(
+		fmt.Sprintf("%v:all", paths.VisitorsRedisPath),
+	)
+}
+
+// GetVisits gets the value of the global visitor/hit counter
+func (mgr *ScoreManager) GetVisits() {
+	// Get raw counter
+	counterRaw, err := mgr.Conn.Get(
+		fmt.Sprintf("%v:all", paths.VisitorsRedisPath),
+	).Result()
+	if err == redis.Nil {
+		return 0
+	} else if err != nil {
+		log.Println(err)
+		return 0
+	}
+
+	// Convert counter to a number
+	counterNum, err := strconv.Atoi(scoreRaw)
+	if err != nil {
+		log.Println(err)
+		return 0
+	}
+	
+	return counterNum
 }
