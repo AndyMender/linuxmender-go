@@ -36,7 +36,8 @@ func init() {
 
 	// Create central route controller object
 	mainController := &controllers.RouteController{
-		Mgr: entryManager,
+		EntryMgr: entryManager,
+		CommentMgr: commentManager,
 		EntryRecords: models.EntriesByYear(entryManager.GetAll()),
 	}
 
