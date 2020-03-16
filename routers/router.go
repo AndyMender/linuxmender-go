@@ -49,8 +49,8 @@ func init() {
 	beego.Router("/posts/:entryid:int/next", mainController, "get:GetEntryNext")
 	beego.Router("/posts/:entryid:int/previous", mainController, "get:GetEntryPrevious")
 
-	beego.Router("/api/endorse/:entryid:int", auxController, "post:LikeEntry")
 	beego.Router("/api/likes/:entryid:int", auxController, "get:GetLikes")
+	beego.Router("/api/likes/:entryid:int", auxController, "post:LikeEntry")
 	beego.Router("/api/visits", auxController, "get:GetVisits")
 	beego.Router("/api/visits", auxController, "post:AddVisit")
 

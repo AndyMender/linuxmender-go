@@ -77,10 +77,8 @@
               <p><em>March 15th 2020 10:25pm</em></p>
             </li>
           </ul>
-        {{end}}
 
         <!--TODO: Make "Comments" area reactive-->
-        {{if .ValidEntry}}
           <form action="/api/comments/{{.EntryID}}" method="post">
             <div class="row">
               <div class="input-field col s6">
@@ -163,7 +161,7 @@
     <!--POST request handlers for "like" button-->
     <script type="text/javascript">
       function likeEntry() {
-        fetch("/api/endorse/{{.EntryID}}", {
+        fetch("/api/likes/{{.EntryID}}", {
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"
