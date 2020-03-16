@@ -38,3 +38,22 @@ func (ctrl *CommentController) SubmitComment() {
 
 	ctrl.Redirect(fmt.Sprintf("/posts/%v", entryID), 303)
 }
+
+// GetComments fetches all comments for the target blog entry
+// @router /api/comments/:entryid GET
+func (ctrl *CommentController) GetComments() {
+	commentRecords := make(map[int]*models.Comment)
+
+	// Get entry ID for current entry
+	entryID, _ := strconv.Atoi(ctrl.Ctx.Input.Param(":entryid"))
+
+	commentRecords = ctrl.Mgr.GetByEntry(entryID)
+	if commentRecords != nil {
+		ctrl.Data["json"] = map[string]interface{}{
+			"entryID": entryID,
+			"comments": commentRecords,
+		}
+	}
+
+	ctrl.ServeJSON()
+}

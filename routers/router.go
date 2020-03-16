@@ -55,4 +55,5 @@ func init() {
 	beego.Router("/api/visits", auxController, "post:AddVisit")
 
 	beego.Router("/api/comments/:entryid:int", commentController, "post:SubmitComment")
+	beego.Router("/api/comments/:entryid:int", commentController, "get:GetComments")
 }
