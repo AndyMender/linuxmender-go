@@ -69,13 +69,15 @@
         <!--TODO: Add available comments-->
         {{if .ValidEntry}}
           <ul class="collection">
-            <li class="collection-item">
-              <span class="title"><b>Timothy wrote...</b></span>
-              <p>
-                I like this! :)
-              </p>
-              <p><em>March 15th 2020 10:25pm</em></p>
-            </li>
+            {{range $_, $comment := .Comments}}
+              <li class="collection-item">
+                <span class="title"><b>{{$comment.Name}} wrote...</b></span>
+                <p>
+                  {{$comment.Comment}}
+                </p>
+                <p><em>{{$comment.TimePosted}}</em></p>
+              </li>
+            {{end}}
           </ul>
 
         <!--TODO: Make "Comments" area reactive-->
@@ -158,7 +160,7 @@
       });
     </script>
 
-    <!--POST request handlers for "like" button-->
+    <!--POST request handler for "like" button-->
     <script type="text/javascript">
       function likeEntry() {
         fetch("/api/likes/{{.EntryID}}", {

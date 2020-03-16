@@ -279,6 +279,7 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 			return nil
 		}
 
+		// TODO: use `utilities.HumanizeTime` to improve comment timestamp?
 		commentRecords[commentID] = &Comment{
 			ID:			commentID,
 			EntryID:	entryID,

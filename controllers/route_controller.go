@@ -53,6 +53,12 @@ func (ctrl *RouteController) GetEntry() {
 	}
 
 	// Get comments for blog entry
+	commentRecords := ctrl.CommentMgr.GetByEntry(entryID)
+	if commentRecords != nil {
+		ctrl.Data["Comments"] = commentRecords
+	} else {
+		ctrl.Data["Comments"] = make(map[int]*models.Comment)
+	}
 
 	// Load main HTML text block into LayoutContent field
 	ctrl.TplName = fmt.Sprintf("pages/%v.html", entry.ID)
