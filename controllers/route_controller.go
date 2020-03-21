@@ -53,6 +53,7 @@ func (ctrl *RouteController) GetEntry() {
 	}
 
 	// Get comments for blog entry
+	// TODO: convert `Comment.TimePosted` to a human-readable format?
 	commentRecords := ctrl.CommentMgr.GetByEntry(entryID)
 	if commentRecords != nil {
 		ctrl.Data["Comments"] = commentRecords
