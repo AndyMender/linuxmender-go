@@ -15,7 +15,6 @@ type RouteController struct {
 	beego.Controller
 	EntryMgr *models.EntryManager
 	CommentMgr *models.CommentManager
-	EntryRecords map[int][]*models.Entry
 }
 
 // Prepare performs an initial setup before running any other method
@@ -34,7 +33,7 @@ func (ctrl *RouteController) GetIndex() {
 	ctrl.Data["Title"] = "Lands of Unix"
 	ctrl.Data["EntryTitle"] = "Welcome!"
 	ctrl.Data["DatePosted"] = utilities.HumanizeTime(utilities.IsoToTime("2020-02-01"))
-	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
+	ctrl.Data["BlogEntries"] = models.EntriesByYear(ctrl.EntryMgr.GetAll())
 	ctrl.Data["EntryID"] = ""
 	ctrl.Data["ValidEntry"] = false
 }
@@ -68,7 +67,7 @@ func (ctrl *RouteController) GetEntry() {
 	ctrl.Data["Title"] = entry.Title
 	ctrl.Data["EntryTitle"] = entry.Title
 	ctrl.Data["DatePosted"] = utilities.HumanizeTime(entry.DatePosted)
-	ctrl.Data["BlogEntries"] = ctrl.EntryRecords
+	ctrl.Data["BlogEntries"] = models.EntriesByYear(ctrl.EntryMgr.GetAll())
 	ctrl.Data["EntryID"] = entry.ID
 	ctrl.Data["ValidEntry"] = true
 }

@@ -38,7 +38,6 @@ func init() {
 	mainController := &controllers.RouteController{
 		EntryMgr: entryManager,
 		CommentMgr: commentManager,
-		EntryRecords: models.EntriesByYear(entryManager.GetAll()),
 	}
 
 	// Register controller for error handling
