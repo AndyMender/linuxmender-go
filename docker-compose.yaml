@@ -3,6 +3,11 @@ version: '3.3'
 services:
   # main Web app
   app:
+    environment:
+      DATABASE_NAME: $DATABASE_NAME
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASSWORD: $DATABASE_PASSWORD
+      DATABASE_PORT: $DATABASE_PORT
     build:
       context: .
       dockerfile: app.Dockerfile
@@ -13,6 +18,12 @@ services:
       - "8080:8080"
 
     command: app
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
     
     depends_on:
       - redis
@@ -29,6 +40,12 @@ services:
     
     ports:
       - "6379: 6579"
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
 
 configs:
   redis_config:
