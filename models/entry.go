@@ -57,7 +57,7 @@ func (mgr *EntryManager) InsertOne(entry *Entry) {
 
 	queryStr := `
 		INSERT INTO entries (id, title, date_posted, tags) 
-		VALUES (?, ?, ?, ?)
+		VALUES ($1, $2, $3, $4)
 	`
 
 	// Create a "prepared" SQL statement context
@@ -90,7 +90,7 @@ func (mgr *EntryManager) InsertMany(entries map[int]*Entry) {
 
 	queryStr := `
 		INSERT INTO entries (id, title, date_posted, tags) 
-		VALUES (?, ?, ?, ?)
+		VALUES ($1, $2, $3, $4)
 	`
 
 	// Create a "prepared" SQL statement context
@@ -127,7 +127,7 @@ func (mgr *EntryManager) GetOne(entryID int) *Entry {
 	queryStr := `
 		SELECT title, date_posted, tags 
 		FROM entries 
-		WHERE id = ?
+		WHERE id = $1
 	`
 
 	// Create a "prepared" SQL statement context

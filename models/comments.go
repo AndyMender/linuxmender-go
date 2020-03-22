@@ -63,7 +63,7 @@ func (mgr *CommentManager) InsertOne(comment *Comment) {
 
 	queryStr := `
 		INSERT INTO comments (entry_id, time_posted, name, email, comment) 
-		VALUES (?, ?, ?, ?, ?)
+		VALUES ($1, $2, $3, $4, $5)
 	`
 
 	// Create a "prepared" SQL statement context
@@ -98,7 +98,7 @@ func (mgr *CommentManager) InsertMany(comments map[int]*Comment) {
 
 	queryStr := `
 		INSERT INTO comments (entry_id, time_posted, name, email, comment) 
-		VALUES (?, ?, ?, ?, ?)
+		VALUES ($1, $2, $3, $4, $5)
 	`
 
 	// Create a "prepared" SQL statement context
@@ -136,7 +136,7 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 	queryStr := `
 		SELECT entry_id, time_posted, name, email, comment
 		FROM comments
-		WHERE id = ?
+		WHERE id = $1
 	`
 
 	// Create a "prepared" SQL statement context
@@ -257,7 +257,7 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 	queryStr := `
 		SELECT id, entry_id, time_posted, name, email, comment 
 		FROM comments
-		WHERE entry_id = ?
+		WHERE entry_id = $1
 	`
 	// Create a "prepared" SQL statement context
 	stmt, err := db.Prepare(queryStr)
