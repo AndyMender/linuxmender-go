@@ -3,6 +3,7 @@ package models
 import (
 	"log"
 	"time"
+	"encoding/base64"
 	"database/sql"
 
 	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
@@ -17,7 +18,7 @@ type Comment struct {
 	TimePosted	time.Time
 	Name		string	`form:"name"`
 	Email		string	`form:"email"`
-	Comment 	string	`form:"comment"`
+	Text 		string	`form:"comment"`
 }
 
 // CommentManager is a SQL-based manager for comment records
@@ -82,7 +83,7 @@ func (mgr *CommentManager) InsertOne(comment *Comment) {
 		comment.TimePosted.Format(utilities.DatetimeFormat),
 		comment.Name,
 		comment.Email,
-		comment.Comment,
+		base64.StdEncoding.EncodeToString([]byte(comment.Text)),
 	)
 	if err != nil {
 		log.Println(err)
@@ -90,7 +91,7 @@ func (mgr *CommentManager) InsertOne(comment *Comment) {
 }
 
 // InsertMany is analogous to InsertOne, but accepts a map of Comment records
-func (mgr *CommentManager) InsertMany(comments map[string]*Comment) {
+func (mgr *CommentManager) InsertMany(comments map[int]*Comment) {
 	db, err := sql.Open("sqlite3", mgr.DBName)
 	if err != nil {
 		log.Println(err)
@@ -117,7 +118,7 @@ func (mgr *CommentManager) InsertMany(comments map[string]*Comment) {
 			comment.TimePosted.Format(utilities.DatetimeFormat),
 			comment.Name,
 			comment.Email,
-			comment.Comment,
+			base64.StdEncoding.EncodeToString([]byte(comment.Text)),
 		)
 		if err != nil {
 			log.Println(err)
@@ -165,6 +166,13 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 		return nil
 	}
 
+	// Decode Comment text
+	commentBytes, err := base64.StdEncoding.DecodeString(comment)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+
 	// Populate Comment record
 	return &Comment{
 		ID:			commentID,
@@ -172,13 +180,13 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 		TimePosted: utilities.IsoToTime2(timePosted),
 		Name: 		name,
 		Email: 		email,
-		Comment: 	comment,
+		Text: 		string(commentBytes),
 	}
 }
 
 // GetAll returns all Comment records from a SQL table
 func (mgr *CommentManager) GetAll() map[int]*Comment {
-	commentRecords := make(map[int]*Comment)
+	comments := make(map[int]*Comment)
 
 	db, err := sql.Open("sqlite3", mgr.DBName)
 	if err != nil {
@@ -215,22 +223,29 @@ func (mgr *CommentManager) GetAll() map[int]*Comment {
 			return nil
 		}
 
-		commentRecords[commentID] = &Comment{
+		// Decode Comment text
+		commentBytes, err := base64.StdEncoding.DecodeString(comment)
+		if err != nil {
+			log.Println(err)
+			return nil
+		}
+
+		comments[commentID] = &Comment{
 			ID:			commentID,
 			EntryID:	entryID,
 			TimePosted: utilities.IsoToTime2(timePosted),
 			Name: 		name,
 			Email: 		email,
-			Comment: 	comment,
+			Text: 		string(commentBytes),
 		}
 	}
 
-	return commentRecords
+	return comments
 }
 
 // GetByEntry returns all Comment records for a given Entry from a SQL table
 func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
-	commentRecords := make(map[int]*Comment)
+	comments := make(map[int]*Comment)
 
 	db, err := sql.Open("sqlite3", mgr.DBName)
 	if err != nil {
@@ -279,16 +294,23 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 			return nil
 		}
 
+		// Decode Comment text
+		commentBytes, err := base64.StdEncoding.DecodeString(comment)
+		if err != nil {
+			log.Println(err)
+			return nil
+		}
+
 		// TODO: use `utilities.HumanizeTime` to improve comment timestamp?
-		commentRecords[commentID] = &Comment{
+		comments[commentID] = &Comment{
 			ID:			commentID,
 			EntryID:	entryID,
 			TimePosted: utilities.IsoToTime2(timePosted),
 			Name: 		name,
 			Email: 		email,
-			Comment: 	comment,
+			Text: 		string(commentBytes),
 		}
 	}
 
-	return commentRecords
+	return comments
 }
