@@ -75,7 +75,7 @@
                 <p>
                   {{$comment.Text}}
                 </p>
-                <p><em>{{$comment.TimePosted}}</em></p>
+                <p><em>{{dateformat $comment.TimePosted "2006-01-02 03:04:05"}}</em></p>
               </li>
             {{end}}
           </ul>

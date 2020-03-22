@@ -36,7 +36,7 @@ func IsoToTime2(timeString string) time.Time {
 	return parsedTime
 }
 
-// HumanizeTime converts a time.Time struct into a human-readable string
+// HumanizeTime converts a time.Time struct into a human-readable date string
 func HumanizeTime(t time.Time) string {
 	// Decide on the day of month string ending 
 	dayEnding := ""
