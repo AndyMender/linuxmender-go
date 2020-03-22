@@ -13,6 +13,8 @@ COPY . .
 RUN go get -d -v ./...
 RUN go install -v ./...
 
+EXPOSE 8080/tcp
+
 # prepare a Docker entry point
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
