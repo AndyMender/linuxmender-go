@@ -1,6 +1,9 @@
 package routers
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/astaxie/beego"
 	"github.com/go-redis/redis"
 
@@ -10,9 +13,19 @@ import (
 )
 
 func init() {
+	// Initialize connection string
+	connStr := fmt.Sprintf(
+		"user=%v password='%v' port=%v dbname=%v sslmode=prefer", 
+		os.Getenv("DATABASE_USER"),
+		os.Getenv("DATABASE_PASSWORD"),
+		os.Getenv("DATABASE_PORT"),
+		os.Getenv("DATABASE_NAME"),
+	)
+
 	// Initialize managers
+	"user=linuxmender dbname=linuxmender sslmode=prefer"
 	entryManager := &models.EntryManager{
-		DBName: paths.DBPath,
+		ConnStr: connStr,
 	}
 	scoreManager := &models.ScoreManager{
 		Conn: redis.NewClient(&redis.Options{
@@ -22,7 +35,7 @@ func init() {
 		}),
 	}
 	commentManager := &models.CommentManager{
-		DBName: paths.DBPath,
+		ConnStr: connStr,
 	}
 
 	// Create auxilliary score controller object

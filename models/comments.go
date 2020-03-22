@@ -6,7 +6,7 @@ import (
 	"encoding/base64"
 	"database/sql"
 
-	_ "github.com/mattn/go-sqlite3" // provides the "sqlite3" driver in the background
+	_ "github.com/lib/pq" // provides the "pq" driver in the background
 
 	"linuxmender/utilities"
 )
@@ -23,22 +23,22 @@ type Comment struct {
 
 // CommentManager is a SQL-based manager for comment records
 type CommentManager struct {
-	DBName string
+	ConnStr string
 }
 
 // CreateTable creates an SQL table for storing blog entries
 func (mgr *CommentManager) CreateTable() error {
-	db, err := sql.Open("sqlite3", mgr.DBName)
+	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
 	}
 	defer db.Close()
 
-	sqlQuery := `
+	queryStr := `
 		CREATE TABLE IF NOT EXISTS comments (
-			id INTEGER NOT NULL PRIMARY KEY,
+			id SERIAL PRIMARY KEY,
 			entry_id INTEGER NOT NULL,
-			time_posted TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			time_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			name TEXT NOT NULL,
 			email TEXT NOT NULL,
 			comment TEXT NOT NULL,
@@ -46,9 +46,9 @@ func (mgr *CommentManager) CreateTable() error {
 		);
 	`
 
-	_, err = db.Exec(sqlQuery)
+	_, err = db.Exec(queryStr)
 	if err != nil {
-		log.Printf("%q: %s\n", err, sqlQuery)
+		log.Printf("%q: %s\n", err, queryStr)
 		return err
 	}
 
@@ -57,30 +57,30 @@ func (mgr *CommentManager) CreateTable() error {
 
 // InsertOne inserts a single Comment record into a SQL table
 func (mgr *CommentManager) InsertOne(comment *Comment) {
-	db, err := sql.Open("sqlite3", mgr.DBName)
+	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
 	}
 	defer db.Close()
 
-	sqlQuery := `
+	queryStr := `
 		INSERT INTO comments (entry_id, time_posted, name, email, comment) 
 		VALUES (?, ?, ?, ?, ?)
 	`
 
 	// Create a "prepared" SQL statement context
-	readyStatement, err := db.Prepare(sqlQuery)
+	stmt, err := db.Prepare(queryStr)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	defer readyStatement.Close()
+	defer stmt.Close()
 
 	// Execute statement
 	// TODO: sanitize input fields or encode using BASE64?
-	_, err = readyStatement.Exec(
+	_, err = stmt.Exec(
 		comment.EntryID,
-		comment.TimePosted.Format(utilities.DatetimeFormat),
+		comment.TimePosted,
 		comment.Name,
 		comment.Email,
 		base64.StdEncoding.EncodeToString([]byte(comment.Text)),
@@ -92,30 +92,30 @@ func (mgr *CommentManager) InsertOne(comment *Comment) {
 
 // InsertMany is analogous to InsertOne, but accepts a map of Comment records
 func (mgr *CommentManager) InsertMany(comments map[int]*Comment) {
-	db, err := sql.Open("sqlite3", mgr.DBName)
+	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
 	}
 	defer db.Close()
 
-	sqlQuery := `
+	queryStr := `
 		INSERT INTO comments (entry_id, time_posted, name, email, comment) 
 		VALUES (?, ?, ?, ?, ?)
 	`
 
 	// Create a "prepared" SQL statement context
-	readyStatement, err := db.Prepare(sqlQuery)
+	stmt, err := db.Prepare(queryStr)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	defer readyStatement.Close()
+	defer stmt.Close()
 
 	// Loop over Comment records and insert them one by one
 	for _, comment := range comments {
-		_, err = readyStatement.Exec(
+		_, err = stmt.Exec(
 			comment.EntryID,
-			comment.TimePosted.Format(utilities.DatetimeFormat),
+			comment.TimePosted,
 			comment.Name,
 			comment.Email,
 			base64.StdEncoding.EncodeToString([]byte(comment.Text)),
@@ -129,32 +129,33 @@ func (mgr *CommentManager) InsertMany(comments map[int]*Comment) {
 
 // GetOne returns a single Comment record from a SQL table
 func (mgr *CommentManager) GetOne(commentID int) *Comment {
-	db, err := sql.Open("sqlite3", mgr.DBName)
+	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
 	}
 	defer db.Close()
 
-	sqlQuery := `
+	queryStr := `
 		SELECT entry_id, time_posted, name, email, comment
 		FROM comments
 		WHERE id = ?
 	`
 
 	// Create a "prepared" SQL statement context
-	readyStatement, err := db.Prepare(sqlQuery)
+	stmt, err := db.Prepare(queryStr)
 	if err != nil {
 		log.Println(err)
 		return nil
 	}
-	defer readyStatement.Close()
+	defer stmt.Close()
 
 	// Fetch Comment record
 	var (
-		entryID int 
-		timePosted, name, email, comment string
+		entryID 			 	int 
+		name, email, comment 	string
+		timePosted			 	time.Time
 	)
-	err = readyStatement.QueryRow(commentID).Scan(
+	err = stmt.QueryRow(commentID).Scan(
 		&entryID, 
 		&timePosted, 
 		&name,
@@ -177,7 +178,7 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 	return &Comment{
 		ID:			commentID,
 		EntryID:	entryID,
-		TimePosted: utilities.IsoToTime2(timePosted),
+		TimePosted: timePosted,
 		Name: 		name,
 		Email: 		email,
 		Text: 		string(commentBytes),
@@ -188,15 +189,15 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 func (mgr *CommentManager) GetAll() map[int]*Comment {
 	comments := make(map[int]*Comment)
 
-	db, err := sql.Open("sqlite3", mgr.DBName)
+	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
 	}
 	defer db.Close()
 
 	// Generate a Rows iterator from a SQL query
-	sqlQuery := "SELECT id, entry_id, time_posted, name, email, comment FROM comments"
-	rows, err := db.Query(sqlQuery)
+	queryStr := "SELECT id, entry_id, time_posted, name, email, comment FROM comments"
+	rows, err := db.Query(queryStr)
 	if err != nil {
 		log.Println(err)
 		return nil
@@ -206,8 +207,9 @@ func (mgr *CommentManager) GetAll() map[int]*Comment {
 	// Iterate over rows and populate Entry records
 	for rows.Next() {
 		var (
-			commentID, entryID int
-			timePosted, name, email, comment string
+			commentID, entryID 		int
+			name, email, comment 	string
+			timePosted 				time.Time
 		)
 
 		err = rows.Scan(
@@ -233,7 +235,7 @@ func (mgr *CommentManager) GetAll() map[int]*Comment {
 		comments[commentID] = &Comment{
 			ID:			commentID,
 			EntryID:	entryID,
-			TimePosted: utilities.IsoToTime2(timePosted),
+			TimePosted: timePosted,
 			Name: 		name,
 			Email: 		email,
 			Text: 		string(commentBytes),
@@ -247,27 +249,27 @@ func (mgr *CommentManager) GetAll() map[int]*Comment {
 func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 	comments := make(map[int]*Comment)
 
-	db, err := sql.Open("sqlite3", mgr.DBName)
+	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
 	}
 	defer db.Close()
 
 	// Generate a Rows iterator from a SQL query
-	sqlQuery := `
+	queryStr := `
 		SELECT id, entry_id, time_posted, name, email, comment 
 		FROM comments
 		WHERE entry_id = ?
 	`
 	// Create a "prepared" SQL statement context
-	readyStatement, err := db.Prepare(sqlQuery)
+	stmt, err := db.Prepare(queryStr)
 	if err != nil {
 		log.Println(err)
 		return nil
 	}
-	defer readyStatement.Close()
+	defer stmt.Close()
 
-	rows, err := readyStatement.Query(entryID)
+	rows, err := stmt.Query(entryID)
 	if err != nil {
 		log.Println(err)
 		return nil
@@ -277,8 +279,9 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 	// Iterate over rows and populate Entry records
 	for rows.Next() {
 		var (
-			commentID, entryID int
-			timePosted, name, email, comment string
+			commentID, entryID 		int
+			name, email, comment 	string
+			timePosted 				time.Time
 		)
 
 		err = rows.Scan(
@@ -305,7 +308,7 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 		comments[commentID] = &Comment{
 			ID:			commentID,
 			EntryID:	entryID,
-			TimePosted: utilities.IsoToTime2(timePosted),
+			TimePosted: timePosted,
 			Name: 		name,
 			Email: 		email,
 			Text: 		string(commentBytes),
