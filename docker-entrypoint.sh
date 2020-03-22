@@ -1,7 +1,11 @@
 #!/bin/bash
 
-if [[ "$1" == 'app' ]]; then
-    ./linuxmender
-elif [[ "$1" == 'test' ]]; then
-    go test ./...
+set -e
+
+if [[ "$1" == "app" ]]; then
+    exec linuxmender
+elif [[ "$1" == "test" ]]; then
+    exec go test ./...
+else
+    exec "$@"
 fi
