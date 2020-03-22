@@ -9,7 +9,6 @@ import (
 
 	"linuxmender/controllers"
 	"linuxmender/models"
-	"linuxmender/paths"
 )
 
 func init() {
@@ -23,7 +22,6 @@ func init() {
 	)
 
 	// Initialize managers
-	"user=linuxmender dbname=linuxmender sslmode=prefer"
 	entryManager := &models.EntryManager{
 		ConnStr: connStr,
 	}

@@ -6,8 +6,6 @@ import (
 	"time"
 	"database/sql"
 	_ "github.com/lib/pq" // provides the "pq" driver in the background
-
-	"linuxmender/utilities"
 )
 
 // Entry is a definition for blog Entry objects
@@ -193,7 +191,7 @@ func (mgr *EntryManager) GetAll() map[int]*Entry {
 			return nil
 		}
 
-		entryRecords[entryID] = &Entry{
+		entries[entryID] = &Entry{
 			ID:         entryID,
 			Title:      title,
 			DatePosted: datePosted,
@@ -201,7 +199,7 @@ func (mgr *EntryManager) GetAll() map[int]*Entry {
 		}
 	}
 
-	return entryRecords
+	return entries
 }
 
 // EntriesByYear re-organizes a map of Entries to group them by year

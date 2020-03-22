@@ -7,8 +7,6 @@ import (
 	"database/sql"
 
 	_ "github.com/lib/pq" // provides the "pq" driver in the background
-
-	"linuxmender/utilities"
 )
 
 // Comment encapsulates a blog entry comment
