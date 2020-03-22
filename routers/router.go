@@ -14,7 +14,7 @@ import (
 func init() {
 	// Initialize connection string
 	connStr := fmt.Sprintf(
-		"user=%v password='%v' port=%v dbname=%v sslmode=prefer", 
+		"user=%v password='%v' port=%v dbname=%v sslmode=disable", 
 		os.Getenv("DATABASE_USER"),
 		os.Getenv("DATABASE_PASSWORD"),
 		os.Getenv("DATABASE_PORT"),
