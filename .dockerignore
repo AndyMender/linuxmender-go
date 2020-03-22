@@ -1,0 +1,14 @@
+# git tree and ignore file
+.git
+.gitignore
+
+# configurations and deployments
+.editorconfig
+.travis.yml
+
+# IDE directories
+.idea
+.vscode
+
+# ENV files
+.env
