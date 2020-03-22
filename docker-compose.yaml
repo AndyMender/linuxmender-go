@@ -3,6 +3,8 @@ version: '3.3'
 services:
   # main Web app
   app:
+    network_mode: "host"
+
     environment:
       DATABASE_NAME: $DATABASE_NAME
       DATABASE_USER: $DATABASE_USER
@@ -31,6 +33,7 @@ services:
   
 #   # db for dynamic data
 #   redis:
+#     network_mode: "host"
 #     image: "redis:5"
 #     configs:
 #       - source: redis_config
@@ -41,7 +44,7 @@ services:
     
 #     ports:
 #       - "6379:6579"
-    
+     
 #     logging:
 #       driver: "json-file"
 #       options:
