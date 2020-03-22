@@ -1,0 +1,42 @@
+<p class="flow-text">
+  My drift towards the very origins of Unix was certain to lead me to the Berkeley Software Distribution (BSD) at some point. Linux 
+  was built on Unix principles, but it isn’t Unix in the genetic sense. On the other hand, as rightfully stated on Wikipedia, BSD 
+  <b>is</b> Unix, but can only call itself Unix-like due to licensing of the original AT&T UNIX operating system (notice the 
+  upper case spelling). Regardless, I decided to take a brave step into this genuine Unix ecosystem.
+</p>
+
+<p class="flow-text">
+  Much like there are multiple Linux distributions, BSD also has its derivatives – FreeBSD, PC-BSD, GhostBSD (both based on FreeBSD), 
+  OpenBSD, NetBSD, DragonflyBSD, etc. The major difference between Linux and BSD is the architecture of the OS. Linux is just the 
+  kernel with a loosely attached userland (apps, system daemons, etc.) defined by individual distributions. BSD is a complete 
+  operating system (kernel + core userland covering basic functionalities, like storage device mounting and networking). On the 
+  FreeBSD website this comparison is nicely outlined a a dichotomy between order (BSD) and chaos (Linux). I myself prefer order!
+</p>
+
+<p class="flow-text">
+  The other major difference is package management. BSD operating systems are <em>source-first</em>, meaning that the primary mode 
+  of software distribution is via source code, together with instructions (Makefiles) and scripts describing how to build it. Since 
+  core OS functionalities are covered by the base system, the (admin) user has full control over installed software. On FreeBSD apps 
+  can be either compiled from source, selecting optional features through an ncurses menu, or installed as binary packages, much like 
+  it is done on most Linux distributions. Because packages are originally built from the Ports Collection (the source tree for 
+  software), they work almost seamlessly with software compiled by the user. Almost, because packages bear the default set of 
+  features. As soon as we decide to cherry-pick features, it's better to stick to the Ports Collection. Most Linux distributions are 
+  <em>binary-first</em>, however some Linux distributions follow the BSDs more closely (Gentoo, Void Linux, CRUX, Slackware, etc.). 
+</p>
+
+<p class="flow-text">
+  The main source of knowledge about FreeBSD is the famous <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/" 
+  target="--blank">FreeBSD Handbook</a>. Perhaps only the Arch Linux and Gentoo wikis can compare to the completeness of the Handbook, 
+  which easily covers over 90% of FreeBSD. I think this is important, because sometimes one might lose Internet connection or even 
+  worse and having the Handbook directly accessible on the drive is a life-saver! Also, it means that there is a single source of 
+  information one can always refer to when in doubt about the OS.
+</p>
+
+<p class="flow-text">
+  One last important thing to remember is that while both Linux and FreeBSD are Unix-like operating systems, FreeBSD is NOT Linux. 
+  That sounds absurdly obvious, but it means that many terminal commands native to Linux may not work on FreeBSD or work differently. 
+  Even something as common as <code>cp</code> (copy) has a slightly different behavior on FreeBSD. In general, the BSDs require a 
+  different mindset and familiarity with their quirks. However, since FreeBSD uses a lot of GNU components, one can expect all of the 
+  major desktop environments and apps to be readily available through the Ports Collection. In fact, the vastness of the Ports 
+  Collection with over 24000 packages easily eclipses smaller Linux projects.
+</p>
