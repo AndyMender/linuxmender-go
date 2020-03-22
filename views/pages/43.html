@@ -1,0 +1,45 @@
+<p class="flow-text">
+    As my last entry was downright pessimistic, I'll try to keep this one in a more positive tone. Although it's true that systemd 
+    has now become the default init and daemon supervisor in pretty much every Linux distribution, there are alternatives still. Also, 
+    in recent months there's been a huge debate in the Debian community on whether to make systemd the default init in release 8 
+    (codename Jessie) and quite some people were strongly against it. Many reasonable points were raised in regards to other available 
+    init systems (sysvinit, systemd, upstart, openRC, etc.). The debate is available 
+    <a href="https://wiki.debian.org/Debate/initsystem/sysvinit" target="--blank">here</a>.
+</p>
+
+<p class="flow-text">
+    It's not necessary to read the entire debate. What's important is that Debian approached the issue in a very mature and 
+    level-headed manner, at least temporarily stopping the systemd hype train. Why does it matter? Mostly because Ubuntu relies on 
+    Debian's decision, even though it's been using <code>upstart</code> instead of System V init scripts for quite a while. Therefore, 
+    if Debian switches, Ubuntu will follow suit. No need to fret, though. Even if systemd becomes the default, Debian intends to 
+    retain some degree of backwards compatibility with sysVinit scripts (default in Debian 7 Wheezy). Thanks to the work of many 
+    volunteers, the switch to a different init is doable and doesn't require too much programming knowledge. Some BunsenLabs (BL) 
+    users (descendant of Crunchbang) even suggested that BL should be init-agnostic due to its minimal approach and reliance on 
+    standard open-source applications, such as Openbox. The irony of it all is that systemd should strive for compliance and not the 
+    vast majority of the Linux ecosystem. The conclusion among BL users was that people who are aware of alternative init systems are 
+    more than capable of performing the switch themselves. Fair enough.
+</p>
+
+<p class="flow-text">
+    Moving on, a multitude of Debian developers and users made an important observation regarding systemd. <b>The problem is not its 
+    init functionality, but the fact that it tries to be anything and everything in the operating system</b>. In a disturbing way
+    it's reminiscent of Windows' subsystems. Hence, the only way around it is to entirely eliminate systemd from an OS. Debian’s fork 
+    Devuan was born with this premise. The undertaking is challenging and it won't happen without blood, sweat and tears (and balls, 
+    of course). However, I believe the people behind Devuan have the necessary qualities to make their noble goal a reality.
+</p>
+
+<p class="flow-text">
+    On the less user-friendly side of the Linux spectrum a new distribution was born over a year ago – <b>Void Linux</b>. Many people 
+    criticized it for not being unique enough. Perhaps initially that was the case. Not anymore, though! Void Linux pioneered a novel 
+    init system called <a href="http://smarden.org/runit/" target="--blank">runit</a>. It is modular in a very Unix-like way and 
+    extremely snappy. Void Linux also features a novel package manager – <code>xbps</code>. It does its job, handles configurations, 
+    etc. For instance, I have a dual GPU, the Geforce GTX 295. xbps downloaded <code>dkms</code>, the nVidia driver sources and 
+    compiled a dynamic kernel module without a hitch. Installed fonts also get added to the related config files automatically. What 
+    I found the most positive is that Void Linux resembles Arch Linux before it drank the systemd Kool-Aid. It’s simple, sane and 
+    very KISS!
+</p>
+
+<p class="flow-text">
+    To sum up, there are non-systemd Linux alternatives in sufficient abundance. One just needs to use them and show others that 
+    systemd is not mandatory and never should be. <b>After all, Linux is all about choice!</b>
+</p>
