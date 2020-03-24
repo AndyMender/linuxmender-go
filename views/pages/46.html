@@ -1,0 +1,115 @@
+<p class="flow-text">
+    The penguin front is growing strong, gaining popularity with each and every passing day. The very same can be said about the 
+    ancestral Unices (Unixes?) - the BSDs. Incidentally, the BSDs have improved greatly over the years. Many of the complaints 
+    against them are no longer valid. Sadly, these outdated complaints often deter prospective users from even trying modern Unices. 
+    Hence, I decided to do the BSDs, and more specifically FreeBSD, some justice and give it a fair go.
+</p>
+
+<p class="flow-text">
+    To begin with, the legendary ZFS file system is as strong as ever, with new features and fixes being constantly introduced. 
+    Frankly, in terms of safe (and redundant) storage of data, it is still unparalleled. I believe ZFS alone is a strong argument for 
+    using FreeBSD to run enterprise servers. <code>dtrace</code>, a tool for system performance auditing, is extensively used by 
+    companies as well.
+</p>
+
+<p class="flow-text">
+    A new feature largely expanded in FreeBSD 10 is <code>bhyve</code>. For many years it was painfully obvious that FreeBSD lacks 
+    fully native virtualization capabilities. The legendary <code>jails</code> were of course in common use, but constituted only 
+    a para-virtualization feature (FreeBSD guests on a FreeBSD host). Currently, <code>bhyve</code> supports guest sessions for BSDs
+    (OpenBSD and FreeBSD), Linux and even Windows 10!
+</p>
+
+<p class="flow-text">
+    In terms of common software, the FreeBSD Ports Collection offers pretty much everything a Linux distribution like Debian provides 
+    (over 24,000 packages in total). Honestly though, only approximately 10% of that is in everyday use. Here's a list of common 
+    tasks/features and the software which covers them:
+</p>
+
+<ul class="collection">
+    <li class="collection-item">
+        <span class="title"><b>Internet Browsing</b></span>
+        <p>
+            Firefox, Chromium (crashes often, but works), old version of Opera
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Music and Video</b></span>
+        <p>
+            Parole, mplayer, mpv, VLC, Xine, etc.
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Image Viewing and Processing</b></span>
+        <p>
+            GImageView, Inkscape, Feh, GIMP, etc.
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Office Software</b></span>
+        <p>
+            LibreOffice, OpenOffice, AbiWord, Gnumeric
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>3D Rendering and Animation</b></span>
+        <p>
+            Blender, CAD suites and libraries, K-3D (libre 3D modeling)
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Programming Environments and Editors</b></span>
+        Geany, Eclipse, IDEA, Emacs, etc. ( + almost all programming languages)
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Gaming</b></span>
+        <p>
+            Many native ports of open-source games and Linux packages with compatibility layers
+        </p>
+    </li>
+</ul>
+
+<p class="flow-text">
+    Unfortunately, there are some areas in which FreeBSD falls short for now:
+</p>
+
+<ul class="collection">
+    <li class="collection-item">
+        <span class="title"><b>Non-native File System Support</b></span>
+        <p>
+            Full NTFS (Windows) support, but lacking support for Linux file systems (only ext2 and ext3 are supported in the kernel)
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Graphics Support</b></span>
+        <p>
+            ATI/AMD cards only via the open-source radeon driver (no Catalyst), nVidia cards almost only through the closed-source 
+            driver.
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Wireless Support</b></span>
+        <p>
+            Only selected wireless chips from Intel, Atheros, Realtek and a couple of other companies have kernel-level support, 
+            hence mobile hardware has to be chosen carefully. Intel for everything is a safe bet, though.
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Closed-source Software</b></span>
+        <p>
+            Third-party software distributed in binary form only is available for Linux, but not for any of the BSDs The Linux 
+            compatibility layer may help, but is not a sure solution.
+        </p>
+    </li>
+    <li class="collection-item">
+        <span class="title"><b>Linux Compatibility Layer</b></span>
+        <p>
+            It's there, but the Linux libraries are derived from older CentOS releases.
+        </p>
+    </li>
+</ul>
+
+<p class="flow-text">
+    As is clear from the features I listed, FreeBSD is more of a server operating system. Still, I would strongly recommend FreeBSD 
+    as a Linux or Windows alternative. It is a rock-solid OS with sane and predictable system management utilities. Frankly, one can 
+    actually get bored by how well it works!
+</p>
