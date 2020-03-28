@@ -1,22 +1,22 @@
 package models
 
 import (
+	"database/sql"
+	"encoding/base64"
 	"log"
 	"time"
-	"encoding/base64"
-	"database/sql"
 
 	_ "github.com/lib/pq" // provides the "pq" driver in the background
 )
 
 // Comment encapsulates a blog entry comment
 type Comment struct {
-	ID			int
-	EntryID		int
-	TimePosted	time.Time
-	Name		string	`form:"name"`
-	Email		string	`form:"email"`
-	Text 		string	`form:"comment"`
+	ID         int
+	EntryID    int
+	TimePosted time.Time
+	Name       string `form:"name"`
+	Email      string `form:"email"`
+	Text       string `form:"comment"`
 }
 
 // CommentManager is a SQL-based manager for comment records
@@ -63,7 +63,7 @@ func (mgr *CommentManager) InsertOne(comment *Comment) {
 
 	queryStr := `
 		INSERT INTO comments (entry_id, time_posted, name, email, comment) 
-		VALUES ($1, $2, $3, $4, $5)
+		VALUES ($1, $2, $3, $4, $5);
 	`
 
 	// Create a "prepared" SQL statement context
@@ -89,7 +89,7 @@ func (mgr *CommentManager) InsertOne(comment *Comment) {
 }
 
 // InsertMany is analogous to InsertOne, but accepts a map of Comment records
-func (mgr *CommentManager) InsertMany(comments map[int]*Comment) {
+func (mgr *CommentManager) InsertMany(comments []*Comment) {
 	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
@@ -98,7 +98,7 @@ func (mgr *CommentManager) InsertMany(comments map[int]*Comment) {
 
 	queryStr := `
 		INSERT INTO comments (entry_id, time_posted, name, email, comment) 
-		VALUES ($1, $2, $3, $4, $5)
+		VALUES ($1, $2, $3, $4, $5);
 	`
 
 	// Create a "prepared" SQL statement context
@@ -136,7 +136,7 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 	queryStr := `
 		SELECT entry_id, time_posted, name, email, comment
 		FROM comments
-		WHERE id = $1
+		WHERE id = $1;
 	`
 
 	// Create a "prepared" SQL statement context
@@ -149,13 +149,13 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 
 	// Fetch Comment record
 	var (
-		entryID 			 	int 
-		name, email, comment 	string
-		timePosted			 	time.Time
+		entryID              int
+		name, email, comment string
+		timePosted           time.Time
 	)
 	err = stmt.QueryRow(commentID).Scan(
-		&entryID, 
-		&timePosted, 
+		&entryID,
+		&timePosted,
 		&name,
 		&email,
 		&comment,
@@ -174,18 +174,18 @@ func (mgr *CommentManager) GetOne(commentID int) *Comment {
 
 	// Populate Comment record
 	return &Comment{
-		ID:			commentID,
-		EntryID:	entryID,
+		ID:         commentID,
+		EntryID:    entryID,
 		TimePosted: timePosted,
-		Name: 		name,
-		Email: 		email,
-		Text: 		string(commentBytes),
+		Name:       name,
+		Email:      email,
+		Text:       string(commentBytes),
 	}
 }
 
 // GetAll returns all Comment records from a SQL table
-func (mgr *CommentManager) GetAll() map[int]*Comment {
-	comments := make(map[int]*Comment)
+func (mgr *CommentManager) GetAll() []*Comment {
+	var comments []*Comment
 
 	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
@@ -194,7 +194,7 @@ func (mgr *CommentManager) GetAll() map[int]*Comment {
 	defer db.Close()
 
 	// Generate a Rows iterator from a SQL query
-	queryStr := "SELECT id, entry_id, time_posted, name, email, comment FROM comments"
+	queryStr := "SELECT id, entry_id, time_posted, name, email, comment FROM comments ORDER BY id;"
 	rows, err := db.Query(queryStr)
 	if err != nil {
 		log.Println(err)
@@ -205,15 +205,15 @@ func (mgr *CommentManager) GetAll() map[int]*Comment {
 	// Iterate over rows and populate Entry records
 	for rows.Next() {
 		var (
-			commentID, entryID 		int
-			name, email, comment 	string
-			timePosted 				time.Time
+			commentID, entryID   int
+			name, email, comment string
+			timePosted           time.Time
 		)
 
 		err = rows.Scan(
 			&commentID,
-			&entryID, 
-			&timePosted, 
+			&entryID,
+			&timePosted,
 			&name,
 			&email,
 			&comment,
@@ -230,22 +230,23 @@ func (mgr *CommentManager) GetAll() map[int]*Comment {
 			return nil
 		}
 
-		comments[commentID] = &Comment{
-			ID:			commentID,
-			EntryID:	entryID,
+		comments = append(comments, &Comment{
+			ID:         commentID,
+			EntryID:    entryID,
 			TimePosted: timePosted,
-			Name: 		name,
-			Email: 		email,
-			Text: 		string(commentBytes),
-		}
+			Name:       name,
+			Email:      email,
+			Text:       string(commentBytes),
+		},
+		)
 	}
 
 	return comments
 }
 
 // GetByEntry returns all Comment records for a given Entry from a SQL table
-func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
-	comments := make(map[int]*Comment)
+func (mgr *CommentManager) GetByEntry(entryID int) []*Comment {
+	var comments []*Comment
 
 	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
@@ -258,6 +259,7 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 		SELECT id, entry_id, time_posted, name, email, comment 
 		FROM comments
 		WHERE entry_id = $1
+		ORDER BY id;
 	`
 	// Create a "prepared" SQL statement context
 	stmt, err := db.Prepare(queryStr)
@@ -277,15 +279,15 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 	// Iterate over rows and populate Entry records
 	for rows.Next() {
 		var (
-			commentID, entryID 		int
-			name, email, comment 	string
-			timePosted 				time.Time
+			commentID, entryID   int
+			name, email, comment string
+			timePosted           time.Time
 		)
 
 		err = rows.Scan(
 			&commentID,
-			&entryID, 
-			&timePosted, 
+			&entryID,
+			&timePosted,
 			&name,
 			&email,
 			&comment,
@@ -303,14 +305,15 @@ func (mgr *CommentManager) GetByEntry(entryID int) map[int]*Comment {
 		}
 
 		// TODO: use `utilities.HumanizeTime` to improve comment timestamp?
-		comments[commentID] = &Comment{
-			ID:			commentID,
-			EntryID:	entryID,
+		comments = append(comments, &Comment{
+			ID:         commentID,
+			EntryID:    entryID,
 			TimePosted: timePosted,
-			Name: 		name,
-			Email: 		email,
-			Text: 		string(commentBytes),
-		}
+			Name:       name,
+			Email:      email,
+			Text:       string(commentBytes),
+		},
+		)
 	}
 
 	return comments

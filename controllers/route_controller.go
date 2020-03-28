@@ -13,7 +13,7 @@ import (
 // RouteController is the main endpoint controller
 type RouteController struct {
 	beego.Controller
-	EntryMgr *models.EntryManager
+	EntryMgr   *models.EntryManager
 	CommentMgr *models.CommentManager
 }
 
@@ -57,7 +57,7 @@ func (ctrl *RouteController) GetEntry() {
 	if comments != nil {
 		ctrl.Data["Comments"] = comments
 	} else {
-		ctrl.Data["Comments"] = make(map[int]*models.Comment)
+		ctrl.Data["Comments"] = make([]*models.Comment, 0)
 	}
 
 	// Load main HTML text block into LayoutContent field
