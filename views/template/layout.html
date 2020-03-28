@@ -137,7 +137,7 @@
               <div class="collapsible-body">
                 <div class="collection">
                   {{range $_, $entry := $entryRecords}}
-                  <a href="/posts/{{$entry.ID}}" class="collection-item">{{$entry.Title}}</a>
+                  <a href="/posts/{{$entry.ID}}" class="collection-item"><em>{{dateformat $entry.DatePosted "Jan 2"}}</em> - {{$entry.Title}}</a>
                   {{end}}
                 </div>
               </div>
