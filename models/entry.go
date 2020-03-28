@@ -1,19 +1,19 @@
 package models
 
 import (
+	"database/sql"
+	_ "github.com/lib/pq" // provides the "pq" driver in the background
 	"log"
 	"strings"
 	"time"
-	"database/sql"
-	_ "github.com/lib/pq" // provides the "pq" driver in the background
 )
 
 // Entry is a definition for blog Entry objects
 type Entry struct {
-	ID			int
-	Title		string
-	DatePosted	time.Time
-	Tags		[]string
+	ID         int
+	Title      string
+	DatePosted time.Time
+	Tags       []string
 }
 
 // EntryManager is a SQL-based manager for Entry records
@@ -57,7 +57,7 @@ func (mgr *EntryManager) InsertOne(entry *Entry) {
 
 	queryStr := `
 		INSERT INTO entries (id, title, date_posted, tags) 
-		VALUES ($1, $2, $3, $4)
+		VALUES ($1, $2, $3, $4);
 	`
 
 	// Create a "prepared" SQL statement context
@@ -70,9 +70,9 @@ func (mgr *EntryManager) InsertOne(entry *Entry) {
 
 	// Execute statement
 	_, err = stmt.Exec(
-		entry.ID, 
-		entry.Title, 
-		entry.DatePosted, 
+		entry.ID,
+		entry.Title,
+		entry.DatePosted,
 		strings.Join(entry.Tags, ","),
 	)
 	if err != nil {
@@ -81,7 +81,7 @@ func (mgr *EntryManager) InsertOne(entry *Entry) {
 }
 
 // InsertMany is analogous to InsertOne, but accepts a map of Entry records
-func (mgr *EntryManager) InsertMany(entries map[int]*Entry) {
+func (mgr *EntryManager) InsertMany(entries []*Entry) {
 	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
 		log.Println(err)
@@ -90,7 +90,7 @@ func (mgr *EntryManager) InsertMany(entries map[int]*Entry) {
 
 	queryStr := `
 		INSERT INTO entries (id, title, date_posted, tags) 
-		VALUES ($1, $2, $3, $4)
+		VALUES ($1, $2, $3, $4);
 	`
 
 	// Create a "prepared" SQL statement context
@@ -104,9 +104,9 @@ func (mgr *EntryManager) InsertMany(entries map[int]*Entry) {
 	// Loop over Entry records and insert them one by one
 	for _, entry := range entries {
 		_, err = stmt.Exec(
-			entry.ID, 
-			entry.Title, 
-			entry.DatePosted, 
+			entry.ID,
+			entry.Title,
+			entry.DatePosted,
 			strings.Join(entry.Tags, ","),
 		)
 		if err != nil {
@@ -127,7 +127,7 @@ func (mgr *EntryManager) GetOne(entryID int) *Entry {
 	queryStr := `
 		SELECT title, date_posted, tags 
 		FROM entries 
-		WHERE id = $1
+		WHERE id = $1;
 	`
 
 	// Create a "prepared" SQL statement context
@@ -141,7 +141,7 @@ func (mgr *EntryManager) GetOne(entryID int) *Entry {
 	// Fetch Entry record
 	var (
 		title, tagsText string
-		datePosted 		time.Time
+		datePosted      time.Time
 	)
 	err = stmt.QueryRow(entryID).Scan(&title, &datePosted, &tagsText)
 	if err != nil {
@@ -159,8 +159,8 @@ func (mgr *EntryManager) GetOne(entryID int) *Entry {
 }
 
 // GetAll returns all Entry records from a SQL table
-func (mgr *EntryManager) GetAll() map[int]*Entry {
-	entries := make(map[int]*Entry)
+func (mgr *EntryManager) GetAll() []*Entry {
+	var entries []*Entry
 
 	db, err := sql.Open("postgres", mgr.ConnStr)
 	if err != nil {
@@ -169,7 +169,7 @@ func (mgr *EntryManager) GetAll() map[int]*Entry {
 	defer db.Close()
 
 	// Generate a Rows iterator from a SQL query
-	queryStr := "SELECT id, title, date_posted, tags FROM entries"
+	queryStr := "SELECT id, title, date_posted, tags FROM entries ORDER BY id;"
 	rows, err := db.Query(queryStr)
 	if err != nil {
 		log.Println(err)
@@ -182,7 +182,7 @@ func (mgr *EntryManager) GetAll() map[int]*Entry {
 		var (
 			entryID         int
 			title, tagsText string
-			datePosted 		time.Time
+			datePosted      time.Time
 		)
 
 		err = rows.Scan(&entryID, &title, &datePosted, &tagsText)
@@ -191,23 +191,24 @@ func (mgr *EntryManager) GetAll() map[int]*Entry {
 			return nil
 		}
 
-		entries[entryID] = &Entry{
+		entries = append(entries, &Entry{
 			ID:         entryID,
 			Title:      title,
 			DatePosted: datePosted,
 			Tags:       strings.Split(tagsText, ","),
-		}
+		},
+		)
 	}
 
 	return entries
 }
 
 // EntriesByYear re-organizes a map of Entries to group them by year
-func EntriesByYear(entryRecords map[int]*Entry) map[int][]*Entry {
+func EntriesByYear(entries []*Entry) map[int][]*Entry {
 	var year int
-	var recordsByYear map[int][]*Entry = make(map[int][]*Entry)
+	recordsByYear := make(map[int][]*Entry)
 
-	for _, entry := range entryRecords {
+	for _, entry := range entries {
 		year = entry.DatePosted.Year()
 
 		recordsByYear[year] = append(recordsByYear[year], entry)
