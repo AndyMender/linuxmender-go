@@ -1,0 +1,60 @@
+<p class="flow-text">
+    One of the principles I follow in computing (and in my life in general, actually) is <b>order</b>. I like when my documents have date tags in their names and 
+    they’re properly arranged in directories. Moreover, I appreciate the power of ‘_’ and ‘-‘ characters in file names to facilitate sorting. Order was one of the 
+    features of BSDs, and of FreeBSD specifically, which I found the most appealing.
+</p>
+
+<p class="flow-text">
+    Incidentally, order is inherent to Unix, which has been passed down to its BSD descendants, but not really to Linux. In fact, there is an old chaos vs order 
+    argument, well elaborated in the <a href="https://www.freebsd.org/doc/en/articles/explaining-bsd/comparing-bsd-and-linux.html" target="--blank">FreeBSD Handbook</a> 
+    and a <a href="http://www.over-yonder.net/~fullermd/rants/bsd4linux/01" target="--blank">blog</a> written by an experienced Unix administrator. Linux was always 
+    just the kernel + a set of essential tools to communicate with the hardware, not a complete operating system with utilities for user-defined tasks (the 
+    <em>userland</em>). Richard Stallman was one of the first software engineers to give shape to the Linux ecosystem and mold it into something resembling an operating 
+    system, however not the only one. While the Linux kernel is monolithic, the OS itself not so much. Therefore, nowadays we have hundreds of Linux distributions and 
+    loosely connected open-source projects (the GNU project, among others).
+</p>
+
+<p class="flow-text">
+    Due to the fact that Linux and GNU-derived applications are common to all open-source operating systems, FreeBSD on the outside is no different than Gentoo, Debian 
+    or Fedora, given that the desktop environment is configured identically. Where the differences become noticeable, is system internals.
+</p>
+
+<p class="flow-text">
+    To start with, Linux operating systems use <code>sd*</code> device labels for IDE, SATA and USB hard drives (all listed in <code>/dev/</code>, of course). Because 
+    the labeling process is dynamic, the same hard drive can get a different label depending on the mount order. FreeBSD uses a much clearer and more predictable 
+    nomenclature. Internal IDE/SATA hard drives are always labeled <code>ada*</code> or <code>ad*</code>, while USB drives (dongles or external drives) are always 
+    labeled <code>da*</code>. Going further, FreeBSD employs disk slicing as an aspect of hard drive partitioning. That way partitions or whole drives can exist as 
+    slices. This added dimension is of immense importance for RAID setups, a hallmark feature of FreeBSD. Also, contrary to Linux's <code>sr*</code>, a CD-ROM/DVD-ROM 
+    is always labeled <code>cd*</code>. Makes sense, does it not?
+</p>
+
+<p class="flow-text">
+    Another relevant difference is the filesystem hierarchy. On Unix-like operating systems binaries can be found in <code>/bin</code>, <code>/sbin</code>, 
+    <code>/usr/bin</code>, <code>/usr/sbin</code>, etc. For FreeBSD this holds true, but only in respect to integral parts of the operating system. The FreeBSD base 
+    system is the monolithic core, unlike the Linux kernel for Linux distributions. Everything that doesn’t belong to the base is stored in <code>/usr/local</code>, 
+    naturally following its original organization into <code>/etc</code>, <code>/bin</code>, etc. This is perhaps the most vital feature of FreeBSD. It saves a lot of 
+    headaches and eases cleanups when matters get out of hand. In addition to that, database data files are stored in <code>/var/db</code>. To me that makes more sense 
+    than trying to figure it out on a per-distribution level, because Debian and Ubuntu store the same files in one place while CentOS, RedHat, Fedora and possibly 
+    openSUSE in another.
+</p>
+
+<p class="flow-text">
+    Somewhat related to directory organization we have the central Unix paradigm of <em>do one thing and do it well</em>. What I oftentimes find absolutely annoying in 
+    Linux is the redundancy of core system tools, such as those for network configuration. One would (and should!) be more than sufficient. FreeBSD does exactly that! 
+    Network interfaces are configured via <code>ifconfig</code>, period. One tool per job, but connected in such a way that an output from one tool can be efficiently 
+    piped into a multitude of others. Some people refer to this approach as
+    <a href="http://widgetsandshit.com/teddziuba/2010/10/taco-bell-programming.html" target="--blank">Taco Bell Programming</a>.
+</p>
+
+<p class="flow-text">
+    Last but not least, a huge point of pride for the BSDs is and always has been documentation. An undocumented pigeon may as well be a wolf in sheep’s skin, unless we 
+    can read its <code>man pigeon</code> manual page or find the appropriate reference in a handbook. The Arch Linux, Fedora and Gentoo projects clearly show beneficial
+    it is to have good documentation. Read the manual (RTM) should be treated as a blessing, a promise of comprehension, not as a hex one uses to drive evil spirits and 
+    newbies away! OpenBSD (though FreeBSD also) is king in terms of documentation. No patch/update/this-cool-new-feature may be included in the OS if it is not properly 
+    (clearly) documented.
+</p>
+
+<p class="flow-text">
+    Thus, I conclude my musings. Somewhat naively, thinking that maybe in the future Linux will learn that order is in fact good and makes both work and leisure more 
+    enjoyable.
+</p>
